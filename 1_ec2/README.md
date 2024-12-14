@@ -16,7 +16,7 @@ resource "aws_instance" "web_app" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.TF_SG.id] # optional: use default SG if we don't mentioned
   key_name               = aws_key_pair.TF_KEY_PAIR.key_name
-  #user_data              = file("userdata.sh")
+  #user_data              = file("scripts/userdata.sh")
   user_data              = <<-EOF
                           #!/bin/bash
                           set -e  # Exit script on any error
