@@ -1,92 +1,45 @@
-## Create EC2 using Terraform
+# EC2 + UserData + KeyPair + SG
 
-### Step1; Create Provider
-
-`provider.tf`:
 ````hcl
 provider "aws" {
   region = "us-east-1"
-  # access_key = "<YOUR_ACCESS_KEY>"
-  # secret_key = "<YOR_SECRET_KEY>"
 }
-````
-But Hard coding of `access_key` and `secret_key` is not recommended, instead use `aws configure`
-````console
-aws configure
 
-AWS Access Key ID [****************DWEV]:<YOUR_ACCESS_KEY>
-AWS Secret Key [****************DWEV]:<YOR_SECRET_KEY>
-````
+resource "aws_key_pair" "TF_KEY_PAIR" {
+  key_name = "my-key-pair"
+  # public_key = file("~/.ssh/id_rsa.pub") # Path to your public SSH key
+  public_key = file("C:\\Users\\arpan\\.ssh\\id_rsa.pub")
+}
 
-### Step2: Download provider specific dependency
-````console
-terraform init
+resource "aws_instance" "web_app" {
+  ami                    = "ami-0453ec754f44f9a4a"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.TF_SG.id] # optional: use default SG if we don't mentioned
+  key_name               = aws_key_pair.TF_KEY_PAIR.key_name
+  #user_data              = file("userdata.sh")
+  user_data              = <<-EOF
+                          #!/bin/bash
+                          set -e  # Exit script on any error
+                          yum update -y
+                          yum install -y httpd
+                          echo "Hello, World!" > /var/www/html/index.html
+                          systemctl start httpd
+                          systemctl enable httpd
+                          EOF
 
-Initializing the backend...
-Initializing provider plugins...
-- Finding latest version of hashicorp/aws...
-- Installing hashicorp/aws v5.81.0...
-````
-It will create couples of file and folder inside your directory like:
-- .terraform directory
-- .terraform.lock.hcl
-
-### Format/Beautify the code
-````bash
-terraform fmt
-````
-
-### Check whether the code syntax are valid or not
-````bash
-terraform validate
-````
-
-### Step3: Create the EC2 instance
-
-#### EC2 with default security group  
-````hcl
-resource "aws_instance" "web-app" {
-  ami = var.instance_ami_t2_micro
-  instance_type = var.instance_type
-  count = 1 # optional
 
   tags = {
-    Name = "HelloWorld"
+    Name = "WebApp"
   }
 }
 ````
 
-#### EC2 with custom security group  
-````hcl
-resource "aws_instance" "web-app" {
-  ami           = var.instance_ami_t2_micro
-  instance_type = var.instance_type
-  security_groups = ["aws_security_group.TF_SG.name"]
-  user_data = <<-EOF
-              #!/bin/bash
-          set -e  # Exit script on any error
-            yum update -y
-            yum install -y httpd
-              echo "Hello, World!" > /var/www/html/index.html
-              systemctl start httpd
-             systemctl enable httpd
-              EOF
-  
-  tags = {
-    Name = "HelloWorld"
-  }
-}
-````
-
-### Step3: Generate a Key Pair (if you don’t have one):
+## Generate a Key Pair (if you don’t have one):
 ````bash
 ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
-or
-ssh-keygen -t rsa -b 2048 -f id_rsa
 ````
-Make sure `~/.ssh/id_rsa.pub` contains your public key.
 
-### Connect to the EC2 Instance via SSH:
+## Connect to the EC2 Instance via SSH:
 ````bash
 ssh -i ~/.ssh/id_rsa ec2-user@<public-ip>
 ````

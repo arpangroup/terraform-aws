@@ -1,6 +1,17 @@
+## Important Terraform Commands:
+````console
+terraform init         # Download Dependencies
+terraform plan         # Preview changes before apply
+terraform apply        # Create Resources
+terraform destroy      # Destroy Resources
+
+terraform validate     # Validate Syntax
+terraform fmt          # Format/Beautify Code
+````
+
+
 ## Recommended Terraform Folder Structure
 A scalable folder structure for Terraform projects:
-
 
 ````css
 ├── modules/                # Reusable modules
