@@ -1,4 +1,5 @@
 resource "aws_instance" "web_app" {
+  count                  = 2
   ami                    = var.instance_ami_t2_micro
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.TF_SG.id]
@@ -9,13 +10,13 @@ resource "aws_instance" "web_app" {
                           set -e  # Exit script on any error
                           yum update -y
                           yum install -y httpd
-                          echo "<h1>Welcome to Instance 0 - Host: $(hostname)</h1>" > /var/www/html/index.html
+                          echo "<h1>Welcome to Instance ${count.index}</h1><p>Host: $(hostname)</p>" > /var/www/html/index.html
                           systemctl start httpd
                           systemctl enable httpd
                           EOF
 
 
   tags = {
-    Name = "WebApp"
+    Name = "WebApp-${count.index}"
   }
 }

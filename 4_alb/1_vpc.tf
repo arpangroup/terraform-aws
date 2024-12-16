@@ -29,6 +29,7 @@ resource "aws_subnet" "TF_PRIVATE_SUBNET" {
   vpc_id            = aws_vpc.TF_VPC.id
   cidr_block        = "10.0.5.0/24"
   availability_zone = "us-east-1b" # Specify another availability zone
+
   tags = {
     Name = "tf-private-subnet"
   }
@@ -37,6 +38,7 @@ resource "aws_subnet" "TF_PRIVATE_SUBNET" {
 # Create an internet gateway
 resource "aws_internet_gateway" "TF_IGW" {
   vpc_id = aws_vpc.TF_VPC.id
+
   tags = {
     Name = "tf-main-igw"
   }
