@@ -9,13 +9,13 @@
 
 
 ````console
-terraform init         # Download Dependencies
-terraform plan         # Preview changes before apply
-terraform apply        # Create Resources
-terraform destroy      # Destroy Resources
+terraform init                       # Download Dependencies
+terraform plan                       # Preview changes before apply
+terraform apply -auto-approve        # Create Resources
+terraform destroy -auto-approve      # Destroy Resources
 
-terraform validate     # Validate Syntax
-terraform fmt          # Format/Beautify Code
+terraform validate                   # Validate Syntax
+terraform fmt                        # Format/Beautify Code
 ````
 
 

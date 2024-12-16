@@ -9,7 +9,7 @@ resource "aws_instance" "web_app" {
                           set -e  # Exit script on any error
                           yum update -y
                           yum install -y httpd
-                          echo "Hello, World!" > /var/www/html/index.html
+                          echo "<h1>Welcome to Instance 0 - Host: $(hostname)</h1>" > /var/www/html/index.html
                           systemctl start httpd
                           systemctl enable httpd
                           EOF

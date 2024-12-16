@@ -3,11 +3,11 @@
 
 # Create Load Balancer
 resource "aws_lb" "TF_ALB" {
-  name               = "example-alb"
-  internal           = false
-  load_balancer_type = "application"                      # [application, gateway, network]
-  security_groups    = [aws_security_group.TF_ALB_SG.id]  # Load Balancer's security group
-  subnets            = aws_subnet.TF_PUBLIC_SUBNET[*].id  # public subnets,
+  name                       = "tf-alb"
+  internal                   = false
+  load_balancer_type         = "application"                     # [application, gateway, network]
+  security_groups            = [aws_security_group.TF_ALB_SG.id] # Load Balancer's security group
+  subnets                    = aws_subnet.TF_PUBLIC_SUBNET[*].id # public subnets,
   enable_deletion_protection = false
 
   /*access_logs {

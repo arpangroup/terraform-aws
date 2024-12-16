@@ -1,12 +1,19 @@
 # Security Group for ALB
 resource "aws_security_group" "TF_ALB_SG" {
-  name        = "alb-sg"
+  name        = "tf-alb-sg"
   description = "Security group for ALB"
   vpc_id      = aws_vpc.TF_VPC.id
 
   ingress {
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -22,13 +29,21 @@ resource "aws_security_group" "TF_ALB_SG" {
 
 # Security Group for EC2 Instances
 resource "aws_security_group" "TF_EC2_SG" {
-  name        = "ec2-sg"
+  name        = "tf-ec2-sg"
   description = "Security group for EC2 instances"
+  vpc_id      = aws_vpc.TF_VPC.id
 
   ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.TF_ALB_SG.id] # Allow traffic only from the ALB
+  }
+
+  ingress {
+    from_port       = 8080
+    to_port         = 8080
+    protocol        = "tcp"
     security_groups = [aws_security_group.TF_ALB_SG.id] # Allow traffic only from the ALB
   }
 

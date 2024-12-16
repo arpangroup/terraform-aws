@@ -13,14 +13,14 @@ resource "aws_security_group" "TF_SG" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  ingress {
+  /*ingress {
     description      = "HTTPS"
     from_port        = 443
     to_port          = 443
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
-  }
+  }*/
 
   ingress {
     description      = "HTTP"

@@ -8,6 +8,6 @@ variable "vpc_id" {
 }
 
 variable "subnets" {
-  type = list(string)
+  type    = list(string)
   default = ["subnet-058d4dbaf153c3906", "subnet-0151be7750e193890"]
 }

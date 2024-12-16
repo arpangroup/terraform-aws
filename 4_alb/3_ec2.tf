@@ -4,7 +4,7 @@ resource "aws_instance" "webapp" {
   ami             = "ami-0453ec754f44f9a4a"
   instance_type   = "t2.micro"
   subnet_id       = aws_subnet.TF_PUBLIC_SUBNET[count.index].id
-  security_groups = [aws_security_group.TF_EC2_SG.name]
+  security_groups = [aws_security_group.TF_EC2_SG.id]
 
   user_data = <<-EOF
               #!/bin/bash
