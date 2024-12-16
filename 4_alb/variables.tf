@@ -1,3 +1,8 @@
+
+variable "ami_id" {
+  default = "ami-0453ec754f44f9a4a"
+}
+
 variable "vpc_id" {
   default = "vpc-07fa560fff8415af2"
 }
