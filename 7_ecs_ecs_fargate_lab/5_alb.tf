@@ -1,8 +1,8 @@
 resource "aws_lb" "TF_ALB" {
-  name               = ""
+  name               = "tf-ecs-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.TF_SG.id]
+  security_groups    = [aws_security_group.TF_ALB_SG.id]
   subnets            = [aws_subnet.TF_PUBLIC_SUBNET.id]
 
   tags = {
@@ -17,6 +17,6 @@ resource "aws_lb_listener" "TF_ALB_LISTENER" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.TF_TG.id
+    target_group_arn = aws_lb_target_group.TF_ECS_TG.id
   }
 }

@@ -3,7 +3,7 @@ resource "aws_lb_target_group" "TF_TG" {
   name     = "example-tg"
   port     = 80        # Port Specifies Where to Send Traffic on the Target
   protocol = "HTTP"
-  target_type = "ins" # [instance, ip, alb]
+  target_type = "instance" # [instance, ip, alb]
   vpc_id   = var.vpc_id
 
   health_check {
