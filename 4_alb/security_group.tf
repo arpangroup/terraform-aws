@@ -28,7 +28,7 @@ resource "aws_security_group" "TF_EC2_SG" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    security_groups = [aws_security_group.TF_ALB_SG.id]
+    security_groups = [aws_security_group.TF_ALB_SG.id] # Allow traffic only from the ALB
   }
 
   egress {
