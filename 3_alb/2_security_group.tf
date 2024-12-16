@@ -34,15 +34,9 @@ resource "aws_security_group" "TF_EC2_SG" {
   vpc_id      = aws_vpc.TF_VPC.id
 
   ingress {
+    description     = "Allow traffic only from the ALB "
     from_port       = 80
     to_port         = 80
-    protocol        = "tcp"
-    security_groups = [aws_security_group.TF_ALB_SG.id] # Allow traffic only from the ALB
-  }
-
-  ingress {
-    from_port       = 8080
-    to_port         = 8080
     protocol        = "tcp"
     security_groups = [aws_security_group.TF_ALB_SG.id] # Allow traffic only from the ALB
   }

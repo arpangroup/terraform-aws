@@ -1,48 +1,54 @@
-
-# Create a VPC
+# VPC
 resource "aws_vpc" "TF_VPC" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
   enable_dns_hostnames = true
 
   tags = {
-    Name = "TF_VPC-${var.env}"
+    Name = "TF_VPC"
   }
 }
 
-# Create two public subnets
+# Public Subnets
 resource "aws_subnet" "TF_PUBLIC_SUBNET" {
-  count                   = 2
-  vpc_id                  = aws_vpc.TF_VPC.id
-  cidr_block             = "10.0.${count.index}.0/24"
-  # cidr_block              = "10.0.1.0/24"
+  count      = 2
+  vpc_id     = aws_vpc.TF_VPC.id
+  #cidr_block = "10.0.1.0/24"
+  cidr_block = "10.0.${count.index}.0/24"
   map_public_ip_on_launch = true
-  availability_zone       = "us-east-1a"
+  #availability_zone      = "us-east-1a"
+  availability_zone = data.aws_availability_zones.available.names[count.index]
 
   tags = {
-    Name = "tf-public-subnet"
+    Name = "tf-public-subnet-${count.index}"
   }
 }
 
-# Create a private subnet
+# Private Subnets
 resource "aws_subnet" "TF_PRIVATE_SUBNET" {
+  count             = 2
   vpc_id            = aws_vpc.TF_VPC.id
-  cidr_block        = "10.0.5.0/24"
-  availability_zone = "us-east-1b" # Specify another availability zone
+  #cidr_block        = "10.0.5.0/24"
+  cidr_block = "10.0.${count.index + 10}.0/24"
+  map_public_ip_on_launch  = false
+  #availability_zone = "us-east-1b"
+  availability_zone = data.aws_availability_zones.available.names[count.index]
+
   tags = {
-    Name = "tf-private-subnet"
+    Name = "tf-private-subnet-${count.index}"
   }
 }
 
-# Create an internet gateway
+# Internet Gateway for Public Subnets
 resource "aws_internet_gateway" "TF_IGW" {
   vpc_id = aws_vpc.TF_VPC.id
+
   tags = {
     Name = "tf-main-igw"
   }
 }
 
-# Create a route table for public subnet
+# Route Table for Public Subnets
 resource "aws_route_table" "TF_PUBLIC_ROUTE_TABLE" {
   vpc_id = aws_vpc.TF_VPC.id
 
@@ -58,7 +64,55 @@ resource "aws_route_table" "TF_PUBLIC_ROUTE_TABLE" {
 
 # Associate Route Table with Subnets
 resource "aws_route_table_association" "public_association" {
-  count = 2
+  count          = 2
   subnet_id      = aws_subnet.TF_PUBLIC_SUBNET[count.index].id
   route_table_id = aws_route_table.TF_PUBLIC_ROUTE_TABLE.id
+}
+
+######################################################
+#                    NAT Gateway                     #
+######################################################
+# NAT Gateway for Private Subnets
+/*resource "aws_eip" "TF_NAT_EIP" {
+  vpc = true
+
+  tags = {
+    Name = "tf-nat-eip"
+  }
+}
+
+resource "aws_nat_gateway" "TF_NAT_GATEWAY" {
+  allocation_id = aws_eip.TF_NAT_EIP.id
+  subnet_id     = aws_subnet.TF_PUBLIC_SUBNET[0].id # NAT Gateway in the first public subnet
+
+  tags = {
+    Name = "tf-nat-gateway"
+  }
+}
+
+# Route Table for Private Subnets
+resource "aws_route_table" "TF_PRIVATE_ROUTE_TABLE" {
+  vpc_id = aws_vpc.TF_VPC.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.TF_NAT_GATEWAY.id
+  }
+
+  tags = {
+    Name = "tf-private-route-table"
+  }
+}
+
+# Associate Route Table with Private Subnets
+resource "aws_route_table_association" "TF_PRIVATE_ROUTE_ASSOCIATION" {
+  count          = 2
+  subnet_id      = aws_subnet.TF_PRIVATE_SUBNET[count.index].id
+  route_table_id = aws_route_table.TF_PRIVATE_ROUTE_TABLE.id
+}*/
+######################################################
+
+# Get availability zones
+data "aws_availability_zones" "available" {
+  state = "available"
 }

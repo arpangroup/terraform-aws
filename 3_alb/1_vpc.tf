@@ -1,4 +1,4 @@
-# Create a VPC
+# VPC
 resource "aws_vpc" "TF_VPC" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
@@ -9,33 +9,37 @@ resource "aws_vpc" "TF_VPC" {
   }
 }
 
-# Create two public subnets
+# Public Subnets
 resource "aws_subnet" "TF_PUBLIC_SUBNET" {
   count      = 2
   vpc_id     = aws_vpc.TF_VPC.id
+  #cidr_block = "10.0.1.0/24"
   cidr_block = "10.0.${count.index}.0/24"
-  # cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = true
   #availability_zone      = "us-east-1a"
   availability_zone = data.aws_availability_zones.available.names[count.index]
 
   tags = {
-    Name = "tf-public-subnet"
+    Name = "tf-public-subnet-${count.index}"
   }
 }
 
-# Create a private subnet
+# Private Subnets
 resource "aws_subnet" "TF_PRIVATE_SUBNET" {
+  count             = 2
   vpc_id            = aws_vpc.TF_VPC.id
-  cidr_block        = "10.0.5.0/24"
-  availability_zone = "us-east-1b" # Specify another availability zone
+  #cidr_block        = "10.0.5.0/24"
+  cidr_block = "10.0.${count.index + 10}.0/24"
+  map_public_ip_on_launch  = false
+  #availability_zone = "us-east-1b"
+  availability_zone = data.aws_availability_zones.available.names[count.index]
 
   tags = {
-    Name = "tf-private-subnet"
+    Name = "tf-private-subnet-${count.index}"
   }
 }
 
-# Create an internet gateway
+# Internet Gateway for Public Subnets
 resource "aws_internet_gateway" "TF_IGW" {
   vpc_id = aws_vpc.TF_VPC.id
 
@@ -44,7 +48,7 @@ resource "aws_internet_gateway" "TF_IGW" {
   }
 }
 
-# Create a route table for public subnet
+# Route Table for Public Subnets
 resource "aws_route_table" "TF_PUBLIC_ROUTE_TABLE" {
   vpc_id = aws_vpc.TF_VPC.id
 
