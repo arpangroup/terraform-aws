@@ -1,1 +1,12 @@
 /.idea/*
+
+**/.terraform/*
+
+# Compiled files
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+.terraform.tfstate.lock.info
+
+# Module directory
+.terraform/
