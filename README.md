@@ -1,4 +1,13 @@
 ## Important Terraform Commands:
+1. Simple EC2 Instance Setup
+2. Setup VPC (subnet + IGW + RT + SG)
+3. EC2 + S3 + Static Website
+4. EC2 + S3 + SpringBoot Jar + DynamoDB
+5. 
+
+
+
+
 ````console
 terraform init         # Download Dependencies
 terraform plan         # Preview changes before apply
