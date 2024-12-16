@@ -1,3 +1,12 @@
+- [What is Bastion Host and why it is so important? - Step by Step tutorial (Part-6)](https://www.youtube.com/watch?v=pI6glWVEkcY&list=PL7iMyoQPMtAN4xl6oWzafqJebfay7K8KP&index=6)
+- [AWS User Data Tutorial - Step by Step (Part-7)](https://www.youtube.com/watch?v=uxTi1iUu5gc&list=PL7iMyoQPMtAN4xl6oWzafqJebfay7K8KP&index=7)
+- [WS how to setup VPC, Public, Private Subnet, NAT, Internet Gateway, Route Table? - (Part-5)](https://www.youtube.com/watch?v=43tIX7901Gs)
+- [Mastering AWS: NAT Gateway Setup in Your VPC - A Step-by-Step Tutorial (Part-14)](https://www.youtube.com/watch?v=ydxEeVAqVdo)
+- [AWS Route 53 Course | Part-15](https://www.youtube.com/watch?v=tXgOSt80Mtg)
+- [(ACM) AWS Certificate Manager Course | Route 53 | Load Balancer - Part 16](https://www.youtube.com/watch?v=_bEPuvrjB5Y)
+- [AWS Lambda | Function URL | Environment Vars | Lambda Layers - Step by Step Tutorial (Part -17)](https://www.youtube.com/watch?v=XFGSuj83wdc&t=14s)
+- 
+
 ![vpc.png](vpc_1.png)
 
 ![img.png](vpc_2.png)
