@@ -15,10 +15,14 @@ resource "aws_lb" "TF_ALB" {
     prefix  = "test-lb"
     enabled = false
   }*/
+
+  tags = {
+    Name = "tf-ec2-alb"
+  }
 }
 
 
-# Create Listener
+# Create ALB Listener on Port 80 (HTTP) that forwards to the Target Group on Port 8080
 resource "aws_lb_listener" "TF_ALB_HTTP_TCP_LISTENER" {
   load_balancer_arn = aws_lb.TF_ALB.arn
   port              = 80

@@ -8,7 +8,10 @@ resource "aws_instance" "webapp" {
 
   user_data = <<-EOF
               #!/bin/bash
-              echo "<h1>Welcome to Instance ${count.index} - Host: $(hostname)</h1>" > /var/www/html/index.html
+              # Welcome message including Instance Metadata
+              echo "<h1>Welcome to Instance ${count.index}</h1><p>Host: $(hostname)</p>" > /var/www/html/index.html
+              echo "<p>VPC ID: ${var.vpc_id}</p>" >> /var/www/html/index.html
+
               yum install -y httpd
               systemctl start httpd
               systemctl enable httpd

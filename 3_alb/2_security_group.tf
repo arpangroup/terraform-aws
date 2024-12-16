@@ -11,13 +11,6 @@ resource "aws_security_group" "TF_ALB_SG" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
@@ -33,12 +26,21 @@ resource "aws_security_group" "TF_EC2_SG" {
   description = "Security group for EC2 instances"
   vpc_id      = aws_vpc.TF_VPC.id
 
-  ingress {
+  /*ingress {
     description     = "Allow traffic only from the ALB "
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
     security_groups = [aws_security_group.TF_ALB_SG.id] # Allow traffic only from the ALB
+  }*/
+
+  ingress {
+    description     = "Allow traffic only from the ALB "
+    from_port       = 8080
+    to_port         = 8080
+    protocol        = "tcp"
+    #security_groups = [aws_security_group.TF_ALB_SG.id] # Allow traffic only from the ALB
+    cidr_blocks      = ["0.0.0.0/0"] # from anywhere
   }
 
   egress {
