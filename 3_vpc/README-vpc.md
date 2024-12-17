@@ -7,9 +7,9 @@
 - [AWS Lambda | Function URL | Environment Vars | Lambda Layers - Step by Step Tutorial (Part -17)](https://www.youtube.com/watch?v=XFGSuj83wdc&t=14s)
 - 
 
-![vpc.png](vpc_1.png)
+![vpc.png](../diagrams/vpc_1.png)
 
-![img.png](vpc_2.png)
+![img.png](../diagrams/vpc_2.png)
 
 https://medium.com/geekculture/how-to-manage-public-and-private-subnets-in-aws-with-terraform-69c272003c81
 

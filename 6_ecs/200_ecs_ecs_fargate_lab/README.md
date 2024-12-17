@@ -12,8 +12,8 @@
 1. Providers + Backend state 
 2. VPC + subnet + IGW + RT 
 3. Security Group (depends on VPC)
-4. [TargetGroup](../README-TargetGroup.md) (depends on VPC)
-5. [Load Balancer](../README-alb.md)  (depends on SG, SUBNET, TG)
+4. [TargetGroup](../../README-TargetGroup.md) (depends on VPC)
+5. [Load Balancer](../../README-alb.md)  (depends on SG, SUBNET, TG)
 
 ## Step3: IAM Roles
 1. IAM Role

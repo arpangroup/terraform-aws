@@ -1,5 +1,5 @@
 # AWS ALB to balance load between two EC2 instances
-<image src="../diagrams/alb_to_ec2.png"/>
+<image src="../../diagrams/alb_to_ec2.png"/>
 
 ## Steps:
 1. VPC + IGW + RT 
