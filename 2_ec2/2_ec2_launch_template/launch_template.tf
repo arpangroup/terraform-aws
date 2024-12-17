@@ -1,8 +1,3 @@
-# AWS Launch Template
-
-<image src="../../diagrams/launch_template.png" style="background-color:white"></image>
-
-````hcl
 provider "aws" {
   region = "us-east-1" # Replace with your desired region
 }
@@ -26,7 +21,7 @@ resource "aws_launch_template" "example" {
               #!/bin/bash
               echo "Hello, World" > /var/www/html/index.html
               EOF
-              )
+  )
 
   # Block device mappings (Optional)
   block_device_mappings {
@@ -58,9 +53,3 @@ resource "aws_launch_template" "example" {
 output "launch_template_id" {
   value = aws_launch_template.example.id
 }
-
-````
-
-## Videos
-- [EC2 Launch Template - Part 17](https://www.youtube.com/watch?v=94b-SD2K8qk&list=PL7iMyoQPMtAPVSnMZOpptxGoPqwK1piC6&index=17)
-- 
