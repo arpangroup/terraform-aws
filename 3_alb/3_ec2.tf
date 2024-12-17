@@ -8,14 +8,22 @@ resource "aws_instance" "webapp" {
 
   user_data = <<-EOF
               #!/bin/bash
+              set -e  # Exit script on any error
+              yum update -y
+              yum install -y httpd
+
               # Welcome message including Instance Metadata
               echo "<h1>Welcome to Instance ${count.index}</h1><p>Host: $(hostname)</p>" > /var/www/html/index.html
               echo "<p>VPC ID: ${var.vpc_id}</p>" >> /var/www/html/index.html
 
-              yum install -y httpd
               systemctl start httpd
               systemctl enable httpd
               EOF
+
+  metadata_options {
+    http_tokens = "optional"   # allows both IMDSv1 and IMDSv2.
+    http_endpoint = "enabled"  #["enabled", "disabled"] enables the metadata service.
+  }
 
   tags = {
     Name = "ExampleInstance-${count.index}"
