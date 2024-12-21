@@ -1,6 +1,7 @@
 # Autoscaling Group
 - [AWS Autoscaling by Terraform](https://www.youtube.com/watch?v=9Z0heLHN2Xk)
-- 
+
+![vpc.png](autoscaling.png)
 
 ## Steps:
 1. VPC + Multi AZ
