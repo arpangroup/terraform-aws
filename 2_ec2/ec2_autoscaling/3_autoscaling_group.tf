@@ -15,13 +15,13 @@ resource "aws_autoscaling_group" "TF_ASG" {
     version = "$Latest"
   }
 
-  /*enabled_metrics = [
+  enabled_metrics = [
     "GroupMinSize",
     "GroupMaxSize",
     "GroupDesiredCapacity",
     "GroupInServiceInstances",
     "GroupTotalInstances"
-  ]*/
+  ]
 
   metrics_granularity = "1Minute"
 
