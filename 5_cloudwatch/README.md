@@ -126,3 +126,93 @@ output "instance_id" {
 
 ## CloudWatch Log Group: 
 Logs are automatically sent to specified `log groups` (`ec2-system-logs` and `ec2-cloud-init-logs`).
+
+# Push SpringBoot log to CloudWatch
+To push Spring Boot logs from an application running inside an EC2 instance to AWS CloudWatch, you can use the CloudWatch Agent. Here's how to do it:
+
+## 1. Create a CloudWatch Log Group
+Create a log group in CloudWatch where your logs will be stored.
+````bash
+aws logs create-log-group --log-group-name /my-springboot-app-logs
+````
+
+## 2. Install the CloudWatch Agent
+Install the CloudWatch Agent on your EC2 instance.
+````bash
+sudo yum update -y
+sudo yum install -y amazon-cloudwatch-agent
+````
+
+## 3. Configure CloudWatch Agent
+Create a configuration file for the CloudWatch Agent to specify which logs to push.
+
+Save the file as `/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json`.
+````json
+{
+  "logs": {
+    "logs_collected": {
+      "files": {
+        "collect_list": [
+          {
+            "file_path": "/var/log/springboot/app.log",
+            "log_group_name": "/my-springboot-app-logs",
+            "log_stream_name": "{instance_id}",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          }
+        ]
+      }
+    }
+  }
+}
+````
+
+## 4. Update Spring Boot Logging Configuration
+Configure Spring Boot to write logs to a specific file, e.g., `/var/log/springboot/app.log`.
+````properties
+logging.file.path=/var/log/springboot
+logging.file.name=app.log
+logging.level.root=INFO
+````
+This ensures Spring Boot logs are written to /var/log/springboot/app.log.
+
+## 5. Start the CloudWatch Agent
+Start the CloudWatch Agent and apply the configuration.
+````bash
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+  -a fetch-config \
+  -m ec2 \
+  -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json \
+  -s
+````
+
+## 6. IAM Role for EC2
+````json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+````
+
+## 7. Verify Logs in CloudWatch
+Once the CloudWatch Agent is running, logs from `/var/log/springboot/app.log` should start appearing in the CloudWatch log group `/my-springboot-app-logs`.
+
+## Optional: Automate with User Data
+You can include the setup in your EC2 user data to automate the process during instance launch:
+````bash
+#!/bin/bash
+sudo yum update -y
+sudo yum install -y amazon-cloudwatch-agent
+sudo mkdir -p /var/log/springboot
+echo '{"logs": {"logs_collected": {"files": {"collect_list": [{"file_path": "/var/log/springboot/app.log","log_group_name": "/my-springboot-app-logs","log_stream_name": "{instance_id}","timestamp_format": "%Y-%m-%d %H:%M:%S"}]}}}}' | sudo tee /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json -s
+````
