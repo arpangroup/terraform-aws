@@ -1,9 +1,5 @@
 provider "aws" {
   region = "us-east-1"
-
-  tags = {
-    CreatedBy = "Terraform"
-  }
 }
 
 terraform {
@@ -11,7 +7,7 @@ terraform {
 
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "~> 5.56"
     }
   }

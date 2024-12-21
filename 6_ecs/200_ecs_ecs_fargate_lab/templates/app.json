@@ -1,0 +1,26 @@
+[
+  {
+    "image": "ericdahl/hello-ecs:7f152d1",
+    "name": "hello-ecs",
+    "portMappings": [
+      {
+        "containerPort": 8080,
+        "hostPort": 8080
+      }
+    ],
+    "environment": [
+      {
+        "name": "SPRING_REDIS_HOST",
+        "value": "${redis_host}"
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${cw_log_group}",
+        "awslogs-region": "us-west-2",
+        "awslogs-stream-prefix": "hello-ecs"
+      }
+    }
+  }
+]

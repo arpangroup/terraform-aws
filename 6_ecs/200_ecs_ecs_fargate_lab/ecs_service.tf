@@ -1,9 +1,9 @@
-resource "aws_ecs_service" "TF_ECS-Service" {
-  name             = "my-service"
-  cluster          = aws_ecs_cluster.TF_ECS_CLUSTER.id
+resource "aws_ecs_service" "TF_ECS_springboot-Service" {
+  name             = "springboot-service"
+  cluster          = aws_ecs_cluster.TF_ECS_SPRINGBOOT_CLUSTER.id
   launch_type      = "FARGATE" # [EC2, FARGATE, EXTERNAL]
   platform_version = "LATEST"  # Only for FARGATE launch type
-  task_definition  = aws_ecs_task_definition.TF_TASK_DEFINITION.arn
+  task_definition  = aws_ecs_task_definition.TF_TASK_DEFINITION_springboot_mysql_task.arn
   desired_count    = 2 # HOw many instance should be launched
   iam_role         = aws_iam_role.TF_IAM_ROLE.arn
   depends_on       = [aws_lb_listener.TF_ALB_LISTENER, aws_iam_role.TF_IAM_ROLE]
@@ -27,7 +27,7 @@ resource "aws_ecs_service" "TF_ECS-Service" {
   network_configuration {
     assign_public_ip = true
     security_groups  = [aws_security_group.TF_SG.id]
-    subnets          = [aws_subnet.TF_PUBLIC_SUBNET.id, aws_subnet.TF_PRIVATE_SUBNET.id]
+    subnets          = [aws_subnet.TF_PUBLIC_SUBNET[*].id, aws_subnet.TF_PRIVATE_SUBNET.id]
   }
 
   #   placement_constraints {

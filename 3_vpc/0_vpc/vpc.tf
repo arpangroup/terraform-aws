@@ -11,10 +11,10 @@ resource "aws_vpc" "TF_VPC" {
 
 # Public Subnets
 resource "aws_subnet" "TF_PUBLIC_SUBNET" {
-  count      = 2
-  vpc_id     = aws_vpc.TF_VPC.id
+  count  = 2
+  vpc_id = aws_vpc.TF_VPC.id
   #cidr_block = "10.0.1.0/24"
-  cidr_block = "10.0.${count.index}.0/24"
+  cidr_block              = "10.0.${count.index}.0/24"
   map_public_ip_on_launch = true
   #availability_zone      = "us-east-1a"
   availability_zone = data.aws_availability_zones.available.names[count.index]
@@ -26,11 +26,11 @@ resource "aws_subnet" "TF_PUBLIC_SUBNET" {
 
 # Private Subnets
 resource "aws_subnet" "TF_PRIVATE_SUBNET" {
-  count             = 2
-  vpc_id            = aws_vpc.TF_VPC.id
+  count  = 2
+  vpc_id = aws_vpc.TF_VPC.id
   #cidr_block        = "10.0.5.0/24"
-  cidr_block = "10.0.${count.index + 10}.0/24"
-  map_public_ip_on_launch  = false
+  cidr_block              = "10.0.${count.index + 10}.0/24"
+  map_public_ip_on_launch = false
   #availability_zone = "us-east-1b"
   availability_zone = data.aws_availability_zones.available.names[count.index]
 
@@ -63,7 +63,7 @@ resource "aws_route_table" "TF_PUBLIC_ROUTE_TABLE" {
 }
 
 # Associate Route Table with Subnets
-resource "aws_route_table_association" "public_association" {
+resource "aws_route_table_association" "public_route_table_association" {
   count          = 2
   subnet_id      = aws_subnet.TF_PUBLIC_SUBNET[count.index].id
   route_table_id = aws_route_table.TF_PUBLIC_ROUTE_TABLE.id

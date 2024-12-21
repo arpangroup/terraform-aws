@@ -27,7 +27,7 @@ resource "aws_instance" "spot_instance" {
 
 output "spot_instance_public_ip" {
   value = aws_instance.spot_instance.public_ip
-
+}
 ````
 
 

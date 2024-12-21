@@ -1,4 +1,4 @@
-resource "aws_ecs_cluster" "TF_ECS_CLUSTER" {
+resource "aws_ecs_cluster" "TF_ECS_SPRINGBOOT_CLUSTER" {
   name = "my-tf-cluster"
 
   tags = {
