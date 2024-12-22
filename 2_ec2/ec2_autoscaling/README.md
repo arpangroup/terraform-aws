@@ -66,7 +66,7 @@ resource "aws_autoscaling_group" "TF_ASG" {
    #health_check_grace_period = 300
    #health_check_type    = "ELB" # ["EC2", "ELB"]
    target_group_arns    = [aws_lb_target_group.TF_TG.arn]
-   vpc_zone_identifier  = [var.vpc.public_subnets[*].id]
+   vpc_zone_identifier  = [var.vpc.public_subnets[*].id] #subnets where the AASG will launch instances.
   
    launch_template {
       id      = aws_launch_template.TF_LAUNCH_TEMPLATE.id
@@ -81,7 +81,7 @@ resource "aws_autoscaling_group" "TF_ASG" {
      "GroupTotalInstances"
    ]
 
-   metrics_granularity = "1Minute"
+   metrics_granularity = "1Minute" # Frequency at which CloudWatch collects metrics; Collects metrics every 1 minute
 }
 
 # 3.2. Scaling Policies
@@ -109,14 +109,14 @@ resource "aws_cloudwatch_metric_alarm" "TF_SCALE_UP_ALARM" {
    alarm_name          = "tf-${var.project}-asg-scale-up-alarm"
    alarm_description   = "asg-scale-up-cpu-alarm"
    comparison_operator = "GreaterThanOrEqualToThreshold"
-   evaluation_periods  = 2
+   evaluation_periods  = 2  # the metric must meet the condition for 2 consecutive periods before the alarm state changes.
    metric_name         = "CPUUtilization"
-   namespace           = "AWS/EC2"
-   period              = 120
+   namespace           = "AWS/EC2"  # A container for CloudWatch metrics that groups related metrics. other namespaces are ["AWS/S3", "AWS/ELB", "AWS/RDS"]
+   period              = 120  # The time interval (in seconds) over which the metric is aggregated for evaluation; period = 120 means metrics are collected and averaged over a 2-minute period.
    statistic           = "Average"
    threshold           = 30 # new instance will be created once CPU utilization is higher than 30
-   dimensions          = {
-      "AutoScalingGroupName" = aws_autoscaling_group.TF_ASG.name
+   dimensions          = { # Key-value pairs that refine the metric to specific instances, resources, or groups.
+      "AutoScalingGroupName" = aws_autoscaling_group.TF_ASG.name # Filters the metric to the specified Auto Scaling Group.
    }
    actions_enabled     = true
    alarm_actions       = [aws_autoscaling_policy.TF_scale_up.arn]
@@ -142,3 +142,22 @@ resource "aws_cloudwatch_metric_alarm" "TF_SCALE_DOWN_ALARM" {
 ````
 **Scaling Policies:** The `scale_up` and `scale_down` policies adjust the ASG capacity. You can customize scaling triggers by adding AWS CloudWatch alarms.
 
+## Other Metrics
+- For `AWS/EC2`:
+  - `CPUUtilization`: Average CPU usage.
+  - `DiskReadBytes` / `DiskWriteBytes`: Disk I/O in bytes.
+  -  `NetworkIn` / `NetworkOut`: Network traffic in and out.
+- For `AWS/EC2`:
+  - `RequestCount`: Number of requests.
+  - `HTTPCode_ELB_5XX`: Count of 5XX errors.
+  - `Latency`: Time taken for requests.
+- For `AWS/RDS`:
+  - `CPUUtilization`: CPU usage.
+  - `DatabaseConnections`: Active database connections.
+  - `FreeStorageSpace`: Available storage space.
+- For `AWS/S3`:
+  - `BucketSizeBytes`: Total size of objects in the bucket.
+  - `NumberOfObjects`: Count of objects in the bucket.
+- For `AWS/Lambda`:
+  - `Invocations`: Number of function invocations.
+  - `Duration`: Execution time of the function.

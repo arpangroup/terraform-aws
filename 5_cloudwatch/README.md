@@ -216,3 +216,25 @@ sudo mkdir -p /var/log/springboot
 echo '{"logs": {"logs_collected": {"files": {"collect_list": [{"file_path": "/var/log/springboot/app.log","log_group_name": "/my-springboot-app-logs","log_stream_name": "{instance_id}","timestamp_format": "%Y-%m-%d %H:%M:%S"}]}}}}' | sudo tee /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
 sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json -s
 ````
+
+
+
+## Other Metrics
+- For `AWS/EC2`:
+  - `CPUUtilization`: Average CPU usage.
+  - `DiskReadBytes` / `DiskWriteBytes`: Disk I/O in bytes.
+  -  `NetworkIn` / `NetworkOut`: Network traffic in and out.
+- For `AWS/EC2`:
+  - `RequestCount`: Number of requests.
+  - `HTTPCode_ELB_5XX`: Count of 5XX errors.
+  - `Latency`: Time taken for requests.
+- For `AWS/RDS`:
+  - `CPUUtilization`: CPU usage.
+  - `DatabaseConnections`: Active database connections.
+  - `FreeStorageSpace`: Available storage space.
+- For `AWS/S3`:
+  - `BucketSizeBytes`: Total size of objects in the bucket.
+  - `NumberOfObjects`: Count of objects in the bucket.
+- For `AWS/Lambda`:
+  - `Invocations`: Number of function invocations.
+  - `D
