@@ -1,3 +1,15 @@
+# AWS CloudWatch (Monitoring + Alerting + Reporting + Logging )
+- [Metrics](README-metrics.md) (Default + [Custom Metrics](README-metrics_custom.md))
+- [Logs](README-logs.md) (LogGroup + LogStream + LogInsights)
+- Alarms
+- X-Ray Traces
+- Events
+- Insight
+- Cost Optimization using Lambda
+
+
+
+
 ## EC2 Logging to CloudWatch
 To enable EC2 instance logs (like system logs or application logs) to be sent to `Amazon CloudWatch` using Terraform, you need to do the following:
 1. Install and configure the CloudWatch agent on the EC2 instance.

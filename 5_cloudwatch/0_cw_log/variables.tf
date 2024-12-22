@@ -38,3 +38,8 @@ variable "vpc" {
     }
   }
 }
+
+
+variable "key_pair" {
+  default = "tf-key-pair"
+}
