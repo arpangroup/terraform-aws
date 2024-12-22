@@ -73,8 +73,9 @@ resource "aws_route_table_association" "public_route_table_association" {
 #                    NAT Gateway                     #
 ######################################################
 # NAT Gateway for Private Subnets
-/*resource "aws_eip" "TF_NAT_EIP" {
+resource "aws_eip" "TF_NAT_EIP" {
   vpc = true
+  depends_on = [aws_internet_gateway.TF_IGW]
 
   tags = {
     Name = "tf-nat-eip"
@@ -83,7 +84,8 @@ resource "aws_route_table_association" "public_route_table_association" {
 
 resource "aws_nat_gateway" "TF_NAT_GATEWAY" {
   allocation_id = aws_eip.TF_NAT_EIP.id
-  subnet_id     = aws_subnet.TF_PUBLIC_SUBNET[0].id # NAT Gateway in the first public subnet
+  subnet_id     = aws_subnet.TF_PUBLIC_SUBNET[*].id # NAT Gateway in the first public subnet
+  depends_on    = [aws_internet_gateway.TF_IGW]
 
   tags = {
     Name = "tf-nat-gateway"
@@ -96,8 +98,9 @@ resource "aws_route_table" "TF_PRIVATE_ROUTE_TABLE" {
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.TF_NAT_GATEWAY.id
+    nat_gateway_id = aws_nat_gateway.TF_NAT_GATEWAY.id #destination
   }
+  depends_on = [aws_internet_gateway.TF_IGW]
 
   tags = {
     Name = "tf-private-route-table"
@@ -109,7 +112,7 @@ resource "aws_route_table_association" "TF_PRIVATE_ROUTE_ASSOCIATION" {
   count          = 2
   subnet_id      = aws_subnet.TF_PRIVATE_SUBNET[count.index].id
   route_table_id = aws_route_table.TF_PRIVATE_ROUTE_TABLE.id
-}*/
+}
 ######################################################
 
 # Get availability zones

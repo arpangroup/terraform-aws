@@ -40,3 +40,29 @@ resource "aws_security_group" "TF_PUBLIC_SG" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_security_group" "TF_ALB_SG" {
+  name        = "tf-alb-sg"
+  description = "Security group for ALB access"
+  vpc_id      = aws_vpc.TF_VPC.id
+
+  tags = {
+    Name = "TF_ALB_SG"
+  }
+
+  ingress {
+    description = "Allow HTTP access from anywhere"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Allow HTTP access from anywhere
+  }
+
+  egress {
+    description = "Allow all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1" # Allow all outbound traffic
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}

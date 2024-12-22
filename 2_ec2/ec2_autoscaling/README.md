@@ -1,10 +1,13 @@
 # Autoscaling Group
+- [Setup AWS Application Load Balancer with Auto Scaling Group using Terraform](https://www.youtube.com/watch?v=1m54kzfjGtM)
 - [AWS Autoscaling by Terraform](https://www.youtube.com/watch?v=9Z0heLHN2Xk)
 
-![vpc.png](autoscaling.png)
+![vpc.png](autoscaling_dlt.png)
+
+![img.png](autoscaling.png)
 
 ## Steps:
-1. VPC + Multi AZ
+1. VPC + Multi AZ + SG
 2. Launch Template
 3. ALB + TargetGroup
 4. AutoScalingGroup (LaunchTemplate + Max/Min Size + TG)
