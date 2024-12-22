@@ -1,5 +1,5 @@
 variable "project" {
-  default = "ec2_autoscaling"
+  default = "autoscaling"
 }
 variable "region" {
   default = "us-east-1"

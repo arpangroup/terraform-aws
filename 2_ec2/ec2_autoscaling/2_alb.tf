@@ -21,7 +21,7 @@ resource "aws_lb" "TF_ALB" {
 # ALB Target Group
 resource "aws_lb_target_group" "TF_TG" {
   name        = "tf-target-group"
-  port        = 8080        # Forward traffic to port 8080
+  port        = 80        # Forward traffic to port 8080
   protocol    = "HTTP"
   vpc_id      = var.vpc.id
   target_type = "instance"

@@ -2,7 +2,7 @@
 - [Setup AWS Application Load Balancer with Auto Scaling Group using Terraform](https://www.youtube.com/watch?v=1m54kzfjGtM)
 - [AWS Autoscaling by Terraform](https://www.youtube.com/watch?v=9Z0heLHN2Xk)
 
-![vpc.png](autoscaling_dlt.png)
+![vpc.png](../../diagrams/autoscaling_dlt.png)
 
 ![img.png](../../diagrams/autoscaling.png)
 

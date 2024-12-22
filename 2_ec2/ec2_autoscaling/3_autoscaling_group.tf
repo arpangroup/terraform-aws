@@ -54,13 +54,12 @@ resource "aws_autoscaling_group" "TF_ASG" {
     triggers = ["tag"]
   }*/
 
-  tags = [
-    {
-      key                 = "Name"
-      value               = "TF-ASG-Instance"
-      propagate_at_launch = true
-    }
-  ]
+  tag {
+    key                 = "Name"
+    value               = "TF-ASG-Instance"
+    propagate_at_launch = true
+  }
+
 }
 
 # Scaling Policies
