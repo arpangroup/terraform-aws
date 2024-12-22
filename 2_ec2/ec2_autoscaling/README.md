@@ -4,7 +4,7 @@
 
 ![vpc.png](autoscaling_dlt.png)
 
-![img.png](autoscaling.png)
+![img.png](../../diagrams/autoscaling.png)
 
 ## Steps:
 1. VPC + Multi AZ + SG
