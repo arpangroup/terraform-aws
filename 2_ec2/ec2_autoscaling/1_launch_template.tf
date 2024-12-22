@@ -17,11 +17,20 @@ resource "aws_launch_template" "TF_LAUNCH_TEMPLATE" {
     yum update -y
     yum install -y httpd
 
-    instance_ip=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
-    echo "Hello from instance IP: $instance_ip" > /var/www/html/index.html
+    echo "<h1>Host: $(hostname)</h1>" > /var/www/html/index.html
+
+    #instance_ip=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
+    #echo "Hello from instance IP: $instance_ip" >> /var/www/html/index.html
 
     systemctl start httpd
     systemctl enable httpd
   EOF
   )
+
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name  = "tf-asg-web-server"
+    }
+  }
 }

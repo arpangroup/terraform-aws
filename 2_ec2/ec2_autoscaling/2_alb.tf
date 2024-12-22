@@ -54,3 +54,7 @@ resource "aws_lb_listener" "TF_ALB_HTTP_TCP_LISTENER" {
     target_group_arn = aws_lb_target_group.TF_TG.arn
   }
 }
+
+output "ald_dns_name" {
+  value = aws_lb.TF_ALB.dns_name
+}

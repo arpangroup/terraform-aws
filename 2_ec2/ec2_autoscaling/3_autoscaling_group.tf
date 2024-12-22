@@ -25,6 +25,35 @@ resource "aws_autoscaling_group" "TF_ASG" {
 
   metrics_granularity = "1Minute"
 
+  /*initial_lifecycle_hooks = [
+    {
+      name                  = "ExampleStartupLifeCycleHook"
+      default_result        = "CONTINUE"
+      heartbeat_timeout     = 60
+      lifecycle_transition  = "autoscaling:EC2_INSTANCE_LAUNCHING"
+      notification_metadata = jsonencode({ "hello" = "world" })
+    },
+    {
+      name                  = "ExampleTerminationLifeCycleHook"
+      default_result        = "CONTINUE"
+      heartbeat_timeout     = 180
+      lifecycle_transition  = "autoscaling:EC2_INSTANCE_TERMINATING"
+      notification_metadata = jsonencode({ "goodbye" = "world" })
+    }
+  ]
+
+  instance_refresh = {
+    strategy = "Rolling"
+    preferences = {
+      checkpoint_delay       = 600
+      checkpoint_percentages = [35, 70, 100]
+      instance_warmup        = 300
+      min_healthy_percentage = 50
+      max_healthy_percentage = 100
+    }
+    triggers = ["tag"]
+  }*/
+
   tags = [
     {
       key                 = "Name"
