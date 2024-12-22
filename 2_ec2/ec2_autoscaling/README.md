@@ -21,6 +21,7 @@
 
 ## EC2 Auto Scaling Group
 ````hcl
+# 1. Launch Template
 resource "aws_launch_template" "TF_LAUNCH_TEMPLATE" {
    name          = "tf-launch-template"
    image_id      = var.ami
@@ -38,17 +39,25 @@ resource "aws_launch_template" "TF_LAUNCH_TEMPLATE" {
     #!/bin/bash
     yum update -y
     yum install -y httpd
-
-    instance_ip=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
-    echo "Hello from instance IP: $instance_ip" > /var/www/html/index.html
-
+    echo "<h1>Host: $(hostname)</h1>" > /var/www/html/index.html
     systemctl start httpd
     systemctl enable httpd
   EOF
    )
 }
 
-# Auto Scaling Group
+# 2. ALB
+resource "aws_lb" "TF_ALB" { 
+   ....
+}
+resource "aws_lb_target_group" "TF_ALB" {
+  ,...
+}
+resource "aws_lb_listener" "TF_ALB_HTTP_TCP_LISTENER" {
+   ....
+}
+
+# 3.1. Auto Scaling Group
 resource "aws_autoscaling_group" "TF_ASG" {
    name                 = "tf-${var.project}-asg"
    desired_capacity     = 2 # all time UP or RUN
@@ -56,35 +65,26 @@ resource "aws_autoscaling_group" "TF_ASG" {
    min_size             = 1
    #health_check_grace_period = 300
    #health_check_type    = "ELB" # ["EC2", "ELB"]
-   #target_group_arns    = [aws_lb_target_group.TF_TG.arn]
-   vpc_zone_identifier  = [var.vpc.public_subnets[0].id, var.vpc.public_subnets[1].id]
-
-
+   target_group_arns    = [aws_lb_target_group.TF_TG.arn]
+   vpc_zone_identifier  = [var.vpc.public_subnets[*].id]
+  
    launch_template {
       id      = aws_launch_template.TF_LAUNCH_TEMPLATE.id
       version = "$Latest"
    }
 
-   /*enabled_metrics = [
+   enabled_metrics = [
      "GroupMinSize",
      "GroupMaxSize",
      "GroupDesiredCapacity",
      "GroupInServiceInstances",
      "GroupTotalInstances"
-   ]*/
+   ]
 
    metrics_granularity = "1Minute"
-
-   tags = [
-      {
-         key                 = "Name"
-         value               = "TF-ASG-Instance"
-         propagate_at_launch = true
-      }
-   ]
 }
 
-# Scaling Policies
+# 3.2. Scaling Policies
 resource "aws_autoscaling_policy" "TF_scale_up" {
    name                   = "tf-${var.project}-asg-scale-up"
    autoscaling_group_name = aws_autoscaling_group.TF_ASG.name
@@ -94,7 +94,6 @@ resource "aws_autoscaling_policy" "TF_scale_up" {
    policy_type            = "SimpleScaling"
 }
 
-
 resource "aws_autoscaling_policy" "TF_scale_down" {
    name                   = "tf-${var.project}-asg-scale-down"
    autoscaling_group_name = aws_autoscaling_group.TF_ASG.name
@@ -103,46 +102,43 @@ resource "aws_autoscaling_policy" "TF_scale_down" {
    cooldown               = 300
    policy_type            = "SimpleScaling"
 }
+
+# 3.3. Cloudwatch ALarms
+# alarm will trigger the ASG policy (scale/down) based on the metric (CPUUtilization), comparison
+resource "aws_cloudwatch_metric_alarm" "TF_SCALE_UP_ALARM" {
+   alarm_name          = "tf-${var.project}-asg-scale-up-alarm"
+   alarm_description   = "asg-scale-up-cpu-alarm"
+   comparison_operator = "GreaterThanOrEqualToThreshold"
+   evaluation_periods  = 2
+   metric_name         = "CPUUtilization"
+   namespace           = "AWS/EC2"
+   period              = 120
+   statistic           = "Average"
+   threshold           = 30 # new instance will be created once CPU utilization is higher than 30
+   dimensions          = {
+      "AutoScalingGroupName" = aws_autoscaling_group.TF_ASG.name
+   }
+   actions_enabled     = true
+   alarm_actions       = [aws_autoscaling_policy.TF_scale_up.arn]
+}
+
+# scale down alarm
+resource "aws_cloudwatch_metric_alarm" "TF_SCALE_DOWN_ALARM" {
+   alarm_name          = "tf-${var.project}-asg-scale-down-alarm"
+   alarm_description   = "asg-scale-down-cpu-alarm"
+   comparison_operator = "LessThanOrEqualToThreshold"
+   evaluation_periods  = 2
+   metric_name         = "CPUUtilization"
+   namespace           = "AWS/EC2"
+   period              = 120
+   statistic           = "Average"
+   threshold           = 5 # No instance will be scale down when CPU utilization is lowe than 5%
+   dimensions          = {
+      "AutoScalingGroupName" = aws_autoscaling_group.TF_ASG.name
+   }
+   actions_enabled     = true
+   alarm_actions       = [aws_autoscaling_policy.TF_scale_down.arn]
+}
 ````
 **Scaling Policies:** The `scale_up` and `scale_down` policies adjust the ASG capacity. You can customize scaling triggers by adding AWS CloudWatch alarms.
 
-
-## Optional: Attach a Load Balancer
-````hcl
-resource "aws_autoscaling_group" "TF_ASG" {
-  ....
-  target_group_arns    = [aws_lb_target_group.TF_TG.arn]
-  ....
-}
-
-# Application Load Balancer
-resource "aws_lb" "alb" {
-  name               = "my-alb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb_sg.id]
-  subnets            = ["subnet-12345678", "subnet-23456789"] # Replace with your subnet IDs
-}
-
-# ALB Target Group
-resource "aws_lb_target_group" "TF_TG" {
-   name        = "my-target-group"
-   port        = 80
-   protocol    = "HTTP"
-   vpc_id      = "vpc-12345678" # Replace with your VPC ID
-   target_type = "instance"
-}
-
-# ALB Listener
-resource "aws_lb_listener" "listener" {
-   load_balancer_arn = aws_lb.alb.arn
-   port              = 80
-   protocol          = "HTTP"
-
-   default_action {
-      type             = "forward"
-      target_group_arn = aws_lb_target_group.tg.arn
-   }
-}
-````
-The `target_group_arns` property in the `aws_autoscaling_group` resource connects the ASG instances to the ALB.

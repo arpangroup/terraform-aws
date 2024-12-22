@@ -9,7 +9,6 @@ resource "aws_autoscaling_group" "TF_ASG" {
   target_group_arns    = [aws_lb_target_group.TF_TG.arn]
   vpc_zone_identifier  = [var.vpc.public_subnets[0].id, var.vpc.public_subnets[1].id]
 
-
   launch_template {
     id      = aws_launch_template.TF_LAUNCH_TEMPLATE.id
     version = "$Latest"
