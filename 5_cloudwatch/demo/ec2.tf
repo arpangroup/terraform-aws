@@ -11,7 +11,7 @@ resource "aws_instance" "TF_WEB_APP" {
   vpc_security_group_ids      = [var.vpc.security_group.id]
   key_name                    = var.key_pair
 
-  user_data = file("./scripts/userdata.sh")
+  user_data = file("./userdataV1.sh")
 
   tags = {
     Name = "tf-webapp"
