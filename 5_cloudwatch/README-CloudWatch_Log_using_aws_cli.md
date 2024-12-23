@@ -1,7 +1,7 @@
 # Configure EC2 instance logs to be sent to CloudWatch
 To configure EC2 instance logs to be sent to CloudWatch, follow these steps:<br/>
 #### [Install and run the CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/install-CloudWatch-Agent-commandline-fleet.html)
-#### [Download Word Document](../diagrams/CloudWatch.pdf)
+#### [Download Word Document - CloudWatch-AWS CLI](../diagrams/CloudWatch.pdf)
 
 ## Step1. Set up IAM Role for the EC2 Instance
 To enable the CloudWatch agent to send data from the instance, you must attach an IAM role to the instance. The role to attach is `CloudWatchAgentServerRole`. You should have created this role previously.
