@@ -20,8 +20,11 @@ sudo yum install -y git >> $LOG_FILE 2>&1
 SCRIPT_BASE_URL=${RAW_URL}/${BRANCH_NAME}
 
 
-# Download and run the install_java.sh script
-echo "Downloading and executing Java installation script from ${SCRIPT_BASE_URL}/install_java.sh..." >> $LOG_FILE
+# Download and execute the install_java.sh script
+echo "================================================================================"
+echo "Install Java......." >> $LOG_FILE
+echo "Downloading script from ${SCRIPT_BASE_URL}/install_java.sh..." >> $LOG_FILE
+echo "================================================================================"
 curl -sSL ${SCRIPT_BASE_URL}/install_java.sh | bash >> $LOG_FILE 2>&1
 
 
@@ -37,9 +40,21 @@ curl -sSL ${SCRIPT_BASE_URL}/maven_build.sh | bash >> $LOG_FILE 2>&1
 
 
 # Run the Spring Boot application
+echo "================================================================================"
 echo "Starting the Spring Boot app..." >> $LOG_FILE
+echo "================================================================================"
 nohup java -Dlogging.file.name=$HOME/api.log -jar $APP_PATH/target/*.jar & >> $LOG_FILE 2>&1
 #nohup java -jar target/*.jar &  >> $LOG_FILE 2>&1
 
-echo "EC2 setup completed." >> $$LOG_FILE
+
+
+# Download and execute the install_cloudwatch_agent.sh script
+echo "================================================================================"
+echo "Starting CloudWatch Agent..." >> $LOG_FILE
+echo "Downloading script from ${SCRIPT_BASE_URL}/install_cloudwatch_agent.sh..." >> $LOG_FILE
+echo "================================================================================"
+curl -sSL ${SCRIPT_BASE_URL}/install_cloudwatch_agent.sh | bash >> $LOG_FILE 2>&1
+
+
+echo "EC2 setup completed." >> $LOG_FILE
 
