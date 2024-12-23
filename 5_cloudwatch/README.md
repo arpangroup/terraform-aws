@@ -136,6 +136,31 @@ output "instance_id" {
   - Configures CloudWatch agent to collect logs (e.g., `/var/log/messages` and `/var/log/cloud-init.log`).
   - Starts the CloudWatch agent with the specified configuration.
 
+### Check the Service Status
+````bash
+sudo systemctl status amazon-cloudwatch-agent
+````
+
+### Verify Logs
+````bash
+sudo tail -f /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log
+````
+
+### Verify CloudWatch Metrics or Logs
+Fetch the CloudWatch Agent status using the CLI:
+````bash
+/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a status
+````
+output:
+````json
+{
+  "status": "running",
+  "configstatus": "configured",
+  "cwoc_status": "stopped"
+}
+````
+
+
 ## CloudWatch Log Group: 
 Logs are automatically sent to specified `log groups` (`ec2-system-logs` and `ec2-cloud-init-logs`).
 

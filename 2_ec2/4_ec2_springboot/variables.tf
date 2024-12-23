@@ -52,3 +52,4 @@ variable "github_repo_url" {
 variable "key_name" {
   default = "tf-key-pair"
 }
+

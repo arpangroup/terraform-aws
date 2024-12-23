@@ -39,6 +39,11 @@ variable "vpc" {
   }
 }
 
+
+variable "key_pair" {
+  default = "tf-key-pair"
+}
+
 variable "github_repo_url" {
   default = "https://github.com/arpangroup/hello-ecs-app.git"
 }
