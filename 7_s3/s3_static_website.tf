@@ -1,4 +1,4 @@
-# Create S3 Bucket
+/*# Create S3 Bucket
 resource "aws_s3_bucket" "TF_BUCKET_MY_WEBSITE" {
   bucket = "tf-bucket-website"
 
@@ -7,6 +7,7 @@ resource "aws_s3_bucket" "TF_BUCKET_MY_WEBSITE" {
   }
 }
 
+#Bucket Ownership
 resource "aws_s3_bucket_ownership_controls" "TF_BUCKET_OWNERSHIP" {
   bucket = aws_s3_bucket.TF_BUCKET_MY_WEBSITE.id
 
@@ -69,4 +70,4 @@ resource "aws_s3_bucket_website_configuration" "TF_BUCKET_WEBSITE_CONFIG" {
     }
   }
   depends_on = [aws_s3_bucket.TF_BUCKET_MY_WEBSITE]
-}
+}*/
