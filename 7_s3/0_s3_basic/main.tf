@@ -13,7 +13,7 @@
 resource "aws_s3_object" "hello_txt" {
   #bucket = aws_s3_bucket.TF_S3_BUCKET.bucket
   bucket = var.bucket_name
-  key    = "hello.txt"
+  key    = "hello"
   source = "hello.txt"    # Replace with the local file path
   #acl    = "public-read" # Deprecated ["private", "public-read"] Default ACL for the object is "private"
   content_type = "text/plain"
@@ -58,7 +58,7 @@ data "aws_iam_policy_document" "public_read" {
 data "aws_region" "current" {}
 
 output "s3_file_url" {
-  value = "https://${var.bucket_name}.s3.${data.aws_region.current.name}.amazonaws.com/hello.txt"
+  value = "https://${var.bucket_name}.s3.${data.aws_region.current.name}.amazonaws.com/${aws_s3_object.hello_txt.key}"
   description = "The public URL of the uploaded file"
 }
 
