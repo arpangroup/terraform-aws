@@ -102,7 +102,43 @@ sudo nano /opt/aws/amazon-cloudwatch-agent/bin/config.json
             "file_path": "/home/ec2-user/api.log",
             "log_group_name": "MyApplicationLogs",
             "log_stream_name": "{instance_id}-api-log",
-            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            "timestamp_format": "%Y-%m-%dT%H:%M:%S.%fZ",
+            "timezone": "UTC"
+          }
+        ]
+      }
+    }
+  }
+}
+````
+Full configs:
+````json
+{
+  "agent": {
+    "run_as_user": "root"
+  },
+  "logs": {
+    "logs_collected": {
+      "files": {
+        "collect_list": [
+          {
+            "file_path": "/var/log/messages",
+            "log_group_name": "ec2-system-logs",
+            "log_stream_name": "{instance_id}/messages",
+            "timezone": "UTC"
+          },
+          {
+            "file_path": "/var/log/cloud-init.log",
+            "log_group_name": "ec2-cloud-init-logs",
+            "log_stream_name": "{instance_id}/cloud-init.log",
+            "timezone": "UTC"
+          },
+          {
+            "file_path": "/home/ec2-user/api.log",
+            "log_group_name": "MyApplicationLogs",
+            "log_stream_name": "{instance_id}-api-log",
+            "timestamp_format": "%Y-%m-%dT%H:%M:%S.%fZ",
+            "timezone": "UTC"
           }
         ]
       }
