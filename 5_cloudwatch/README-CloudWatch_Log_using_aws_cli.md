@@ -35,10 +35,11 @@ sudo nano /opt/aws/amazon-cloudwatch-agent/bin/config.json
       "files": {
         "collect_list": [
           {
-            "file_path": "/var/log/messages",
-            "log_group_name": "EC2InstanceLogs",
-            "log_stream_name": "{instance_id}",
-            "timestamp_format": "%b %d %H:%M:%S"
+            "file_path": "/home/ec2-user/api.log",
+            "log_group_name": "MyApplicationLogs",
+            "log_stream_name": "{instance_id}-api-log",
+            "timestamp_format": "%Y-%m-%dT%H:%M:%S.%fZ",
+            "timezone": "UTC"
           }
         ]
       }
@@ -188,3 +189,64 @@ To avoid large log files filling up disk space:
    ````bash
    sudo logrotate -f /etc/logrotate.d/api-log
    ````
+
+## Optional: Create LogGroup using Terraform
+````hcl
+# CloudWatch Log Group
+resource "aws_cloudwatch_log_group" "TF_LOG_GROUP" {
+  name              = "/tf-example/log-group"
+  retention_in_days = 7 # how long log data is retained in the group before being automatically deleted.
+
+  tags = {
+    Environment = "Dev"
+  }
+}
+````
+
+
+## S3 CloudWatch Agent Configuration File
+````hcl
+# Provide CloudWatch Agent Configuration File
+resource "aws_s3_bucket" "agent_config" {
+  bucket = "cloudwatch-agent-config"
+}
+
+resource "aws_s3_bucket_object" "agent_config_file" {
+  bucket = aws_s3_bucket.agent_config.bucket
+  key    = "amazon-cloudwatch-agent.json"
+  content = <<-EOF
+    {
+      "agent": {
+        "run_as_user": "root"
+      },
+      "logs": {
+        "logs_collected": {
+          "files": {
+            "collect_list": [
+              {
+                "file_path": "/var/log/messages",
+                "log_group_name": "ec2-system-logs",
+                "log_stream_name": "{instance_id}/messages",
+                "timezone": "UTC"
+              },
+              {
+                "file_path": "/var/log/cloud-init.log",
+                "log_group_name": "ec2-cloud-init-logs",
+                "log_stream_name": "{instance_id}/cloud-init.log",
+                "timezone": "UTC"
+              },
+              {
+                "file_path": "/home/ec2-user/api.log",
+                "log_group_name": "MyApplicationLogs",
+                "log_stream_name": "{instance_id}-api-log",
+                "timestamp_format": "%Y-%m-%dT%H:%M:%S.%fZ",
+                "timezone": "UTC"
+              }
+            ]
+          }
+        }
+      }
+    }
+  EOF
+}
+````
