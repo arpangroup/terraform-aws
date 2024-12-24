@@ -1,7 +1,7 @@
 # Configure EC2 instance logs to be sent to CloudWatch
 To configure EC2 instance logs to be sent to CloudWatch, follow these steps:<br/>
 #### [Install and run the CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/install-CloudWatch-Agent-commandline-fleet.html)
-#### [Download Word Document - CloudWatch-AWS CLI](../diagrams/CloudWatch.pdf)
+#### [Download Word Document - CloudWatch-AWS CLI](../../diagrams/CloudWatch.pdf)
 
 ## Step1. Set up IAM Role for the EC2 Instance
 To enable the CloudWatch agent to send data from the instance, you must attach an IAM role to the instance. The role to attach is `CloudWatchAgentServerRole`. You should have created this role previously.
@@ -50,7 +50,6 @@ sudo nano /opt/aws/amazon-cloudwatch-agent/bin/config.json
 Save the file in `/opt/aws/amazon-cloudwatch-agent/bin/config.json`.
 
 ## Step4: Start and Verify the CloudWatch Agent
-
 1. Start the agent:
     ````bash
     sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
@@ -81,15 +80,50 @@ Save the file in `/opt/aws/amazon-cloudwatch-agent/bin/config.json`.
    tail -f /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log
    ````
 
+4. Verify CloudWatch Metrics or Logs: Fetch the CloudWatch Agent status using the CLI:
+    ````bash
+    /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a status
+    ````
+    output:
+    ````json
+    {
+      "status": "running",
+      "configstatus": "configured",
+      "cwoc_status": "stopped"
+    }
+    ````
+
+
+> NOTE: Logs are automatically sent to specified `log groups` (`ec2-system-logs` and `ec2-cloud-init-logs`).
+
+
+
 ## Step5: Verify Logs in CloudWatch
 1. Go to the **CloudWatch Management Console**.
 2. Navigate to **Log Groups** and confirm your logs (e.g., `EC2InstanceLogs`) are being received.
 3. Check the log streams (e.g., based on `instance_id`).
 
-## Step6: Integrate Application Log like Spring
+
+
+## Step6: Integrate Application Log like SpringBoot
 To integrate your application logs (stored in `/home/ec2-user/api.log`) with CloudWatch, follow these steps:
 
-### Step6.1: Update the CloudWatch Agent Configuration
+### Step6.1: Create a CloudWatch Log Group
+Create a log group in CloudWatch where your logs will be stored.
+````bash
+aws logs create-log-group --log-group-name /my-springboot-app-logs
+````
+[Create Log Group and Log StreamTerraform](3_log_group.tf)
+
+### Step6.2: Install the CloudWatch Agent
+Install the CloudWatch Agent on your EC2 instance.
+````bash
+sudo yum update -y
+sudo yum install -y amazon-cloudwatch-agent
+````
+[Install CloudWatch Agent with AWS UsedData using Terraform](2_ec2.tf)
+
+### Step6.3: Update the CloudWatch Agent Configuration
 Open or create the CloudWatch agent configuration file:
 ````console
 sudo nano /opt/aws/amazon-cloudwatch-agent/bin/config.json
@@ -101,7 +135,7 @@ sudo nano /opt/aws/amazon-cloudwatch-agent/bin/config.json
         "collect_list": [
           {
             "file_path": "/home/ec2-user/api.log",
-            "log_group_name": "MyApplicationLogs",
+            "log_group_name": "spring-app-logs",
             "log_stream_name": "{instance_id}-api-log",
             "timestamp_format": "%Y-%m-%dT%H:%M:%S.%fZ",
             "timezone": "UTC"
@@ -135,8 +169,8 @@ Full configs:
             "timezone": "UTC"
           },
           {
-            "file_path": "/home/ec2-user/api.log",
-            "log_group_name": "MyApplicationLogs",
+            "file_path": "/var/log/api.log",
+            "log_group_name": "spring-app-logs",
             "log_stream_name": "{instance_id}-api-log",
             "timestamp_format": "%Y-%m-%dT%H:%M:%S.%fZ",
             "timezone": "UTC"
@@ -148,27 +182,43 @@ Full configs:
 }
 ````
 
-### Step6.2: Start or Restart the CloudWatch Agent
+### Step6.4: Update Spring Boot Logging Configuration
+Configure Spring Boot to write logs to a specific file, e.g., `/var/log/api.log`.
+````properties
+logging.file.name=/var/log/api.log
+logging.level.root=INFO
+````
+This ensures Spring Boot logs are written to /var/log/api.log.
+
+
+### Step6.5: Start or Restart the CloudWatch Agent
 Apply the updated configuration:
 ````bash
 sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
-  -a start -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s
+    -a fetch-config \
+    -m ec2 \
+    -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json \
+    -s 
 ````
 If the agent is already running, restart it:
 ````bash
 sudo systemctl restart amazon-cloudwatch-agent
 ````
 
-### Step6.3: Verify Log Upload
+### Step6.6: Verify Log Upload
 Check the CloudWatch Agent logs for issues:
 ````bash
 tail -f /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log
 ````
+
+## Step6.7:. Verify Logs in CloudWatch
+Once the CloudWatch Agent is running, logs from `/var/log/api.log` should start appearing in the CloudWatch log group `/spring-app-logs`.
+
 Go to the CloudWatch Management Console:
 - Navigate to **Log Groups** > **MyApplicationLogs**.
-- Confirm logs from `/home/ec2-user/api.log` are appearing in the log stream.
+- Confirm logs from `/var/log/api.log` are appearing in the log stream.
 
-### Step6.4: Set Up Log Rotation (Optional)
+# Optional: Set Up Log Rotation (Optional)
 To avoid large log files filling up disk space:
 1. Install logrotate if not already installed:
    ````bash
@@ -190,21 +240,24 @@ To avoid large log files filling up disk space:
    sudo logrotate -f /etc/logrotate.d/api-log
    ````
 
-## Optional: Create LogGroup using Terraform
+# Optional: Create LogGroup using Terraform
 ````hcl
 # CloudWatch Log Group
 resource "aws_cloudwatch_log_group" "TF_LOG_GROUP" {
-  name              = "/tf-example/log-group"
+  name              = "spring-app-logs"
   retention_in_days = 7 # how long log data is retained in the group before being automatically deleted.
+}
 
-  tags = {
-    Environment = "Dev"
-  }
+# CloudWatch Log Stream: Sequential sets of log events from a single resource.
+# EX: Logs from an EC2 instance or a Lambda function.
+resource "aws_cloudwatch_log_stream" "TF_CLOUDWATCH_LOG_STREAM" {
+  name           = "${aws_instance.TF_WEB_APP.id}-api-log"  # Dynamically set based on instance ID
+  log_group_name = aws_cloudwatch_log_group.TF_LOG_GROUP.name
 }
 ````
 
 
-## S3 CloudWatch Agent Configuration File
+# S3 CloudWatch Agent Configuration File
 ````hcl
 # Provide CloudWatch Agent Configuration File
 resource "aws_s3_bucket" "agent_config" {
@@ -248,5 +301,23 @@ resource "aws_s3_bucket_object" "agent_config_file" {
       }
     }
   EOF
+}
+````
+
+## IAM Role for EC2
+````json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    }
+  ]
 }
 ````

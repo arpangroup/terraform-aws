@@ -1,9 +1,14 @@
 # EC2 Log to Cloudwatch using Terraform
+
+#### [Setup CloudWatch Agent using AWS CLI](README-setup_CloudWatch_agent_using_aws_cli.md)
+
 1. Install CloudWatch Agent
    - Install Agent (`yum install amazon-cloudwatch-agent -y`)
    - Create a CloudWatch Agent Configuration File 
    - Start the CloudwatchAgent
 2. Setup InstanceProfile (STS Role + Policy)
+3. **Optional**: Create LogGroup & LogStream
+   - If InstanceProfile has only `PutLogEvents`, not `CreateLogGroup` or `CreateLogStream`, then we need to create the LogGroup & LogStream explicitly. Otherwise, Agent will automatically create the log stream ang log group.
 
 
 ## 1. Install CloudWatch Agent
@@ -15,6 +20,7 @@ resource "aws_instance" "example" {
 
   user_data = <<-EOF
       #!/bin/bash
+
       # Install CloudWatch Agent
       sudo yum install -y amazon-cloudwatch-agent
       

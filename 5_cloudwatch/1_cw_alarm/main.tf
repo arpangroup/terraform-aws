@@ -1,20 +1,3 @@
-# CloudWatch Log Group
-resource "aws_cloudwatch_log_group" "TF_LOG_GROUP" {
-  name              = "/example/log-group"
-  retention_in_days = 7 # how long log data is retained in the group before being automatically deleted.
-
-  tags = {
-    Environment = "Dev"
-  }
-}
-
-# CloudWatch Log Stream: Sequential sets of log events from a single resource.
-# EX: Logs from an EC2 instance or a Lambda function.
-resource "aws_cloudwatch_log_stream" "TF_CLOUDWATCH_LOG_STREAM" {
-  name           = "example-log-stream"
-  log_group_name = aws_cloudwatch_log_group.TF_LOG_GROUP.name
-}
-
 # Add an Alarm
 resource "aws_cloudwatch_metric_alarm" "TF_ALARM_cpu_utilization" {
   alarm_name          = "tf-high_cpu_utilization"
