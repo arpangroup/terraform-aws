@@ -1,5 +1,20 @@
 # AWS Lambda
 - [Automate zipping of Lambda code](README-automate_ziping_process.md)
+- Runtime
+- Architecture (x86_64 / arm64)
+- Execution Role
+- Lambda Layers
+- .........
+- Triggers
+- Permissions
+- Destinations
+- Environment Variables
+- VPC
+- Monitoring
+- Concurrency
+- Asynchronous Invocation
+- Database Proxies
+-  State Machine
 
 
 ## Create a Lambda Function
@@ -73,15 +88,6 @@ resource "null_resource" "ZIP_LAMBDA" {
 }
 ````
 
-
-1. How many maximum lambda function I can create in an account?
-2. What is concurrency?
-3. Create a Lambda function which will run every day at 10am and check 
-   - if there is any new user created
-   - If any additional permission added to an existing IAM Roles
-   - If there is any GP2 based EBS volume in any account
-   - Also notify the result
-4. XXX
 
 ## Output Details of an aws_lambda_function 
 ````hcl
@@ -163,3 +169,23 @@ Output:
   "vpc_config" = tolist([])
 }
 ````
+
+1. How many maximum lambda function I can create in an account?
+2. What is concurrency?
+3. Create a Lambda function which will run every day at 10am and check
+    - if there is any new user created
+    - If any additional permission added to an existing IAM Roles
+    - If there is any GP2 based EBS volume in any account
+    - Also notify the result
+4. How to Autoscale LambdaFunction? Is it possible?
+5. How to ensure Lambda function can be execute with valid Authentication Header
+6. LambdaFunction in Java Vs Python performance comparison
+7. Create Lambda Function in a specific VPC?
+8. ** What is Concurrency in Lambda Function?**
+   - What is maximum concurrency?
+   - Pricing for extra concurrency?
+9. **Automate the Environment variables for Lambda function using Terraform or CI/CD pipeline**
+10. Asynchronous Invocation
+11. Send LambdaFunction Logs to CloudWatch
+12. Database Proxies
+13. State Machine
