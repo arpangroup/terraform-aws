@@ -11,8 +11,9 @@
 - [Environment Variables](README-lambda_automate_envs.md)
 - VPC
 - Monitoring
-- Concurrency
+- [Concurrency](README-lambda_concurrency.md)
 - Asynchronous Invocation
+- [Retry](README-lambda_retry.md)
 - Database Proxies
 -  State Machine
 - [AWS Lambda with Python vs Java](README-lambda_with_python_vs_java.md)
