@@ -1,9 +1,16 @@
 ## AWS S3 : Global Service
-- S3 Availability
-- S3 Riles Policy
-- S3 Storage Classes
-- S3 Storage Calculator
-- S3 Requestor Pays
+- S3 Availability (`11 9's`)
+- Object Ownership (`ACL disabled` / `ACL enabled`)
+- [Bucket Ownership Controls](README-s3_bucket_ownership_controls.md) (`Block all public access`)
+- **[S3 Bucket Policy](README-s3_bucket_policy.md)**
+- Bucket Versioning
+- [S3 Storage Classes](README-s3_storage_classes.md)
+- [S3 Storage Calculator](README-s3_storage_calculator.md)
+- **Event notifications** (Send notification when specific event occur on your bucket)
+- Transfer acceleration
+- Object Locking
+- Requester Pays
+- Static Website Hosting
 - S3 Tagging
 - Permission Policies
 - Secure Bucket
@@ -158,3 +165,4 @@ The separation of **AWS S3 bucket policies** from other access control mechanism
 -  To make a bucket or objects **publicly accessible** (e.g., for a website).
 -  To enforce **specific conditions** on bucket access.
 -  When delegating control to teams responsible for managing specific buckets.
+
