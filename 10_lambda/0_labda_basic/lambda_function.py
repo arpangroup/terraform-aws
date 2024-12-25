@@ -12,8 +12,8 @@ def lambda_handler(event, context):
     response = {
         "statusCode": 200,
         "body": json.dumps({
-            "message": "Hello, World!",
-            "input": event
+            "response": "Hello, Response from LambdaFunction!!",
+            "input_event": event
         }),
     }
     return response

@@ -54,8 +54,8 @@ data "aws_iam_policy_document" "public_read" {
   }
 }
 
-# Fetch the current region
-data "aws_region" "current" {}
+/*# Fetch the current region
+data "aws_region" "current" {}*/
 
 output "s3_file_url" {
   value = "https://${var.bucket_name}.s3.${data.aws_region.current.name}.amazonaws.com/${aws_s3_object.hello_txt.key}"
