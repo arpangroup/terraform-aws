@@ -5,16 +5,18 @@
 - Execution Role
 - Lambda Layers
 - .........
-- Triggers
+- [Triggers](README-lambda_trigger.md) (`API Gateway`, `ALB`, `CloudFront`, `CodeCommit`, `CloudWatch Log`, `EventBridge`, `S3`, `SQS`, `SNS`, `DynamoDB` etc...)
 - Permissions
-- Destinations
-- Environment Variables
+- [Destinations](README-lambda_destinations.md)
+- [Environment Variables](README-lambda_automate_envs.md)
 - VPC
 - Monitoring
 - Concurrency
 - Asynchronous Invocation
 - Database Proxies
 -  State Machine
+- [AWS Lambda with Python vs Java](README-lambda_with_python_vs_java.md)
+- [Secure API Gateway Requests with AWS Lambda Authorizer](README-lambda_authentication.md)
 
 
 ## Create a Lambda Function
