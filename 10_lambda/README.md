@@ -1,5 +1,5 @@
 # AWS Lambda
-- [Automate zipping of Lambda code](README-automate_ziping_process.md)
+- [Automate zipping of Lambda code](README-lambda_automate_ziping_process)
 - Runtime
 - Architecture (x86_64 / arm64)
 - Execution Role
@@ -12,7 +12,7 @@
 - VPC
 - Monitoring
 - [Concurrency](README-lambda_concurrency.md)
-- Asynchronous Invocation
+- [Asynchronous Invocation](README-lambda_asynchronous_invocation)
 - [Retry](README-lambda_retry.md)
 - Database Proxies
 -  State Machine
@@ -81,7 +81,7 @@ output "lambda_curl" {
 }
 ````
 ### Optional: Automate Zip Creation using Terraform
-See [Automate zipping of Lambda code](README-automate_ziping_process.md)
+See [Automate zipping of Lambda code](README-lambda_automate_ziping_process)
 ````hcl
 # Create Zip file locally
 resource "null_resource" "ZIP_LAMBDA" {
