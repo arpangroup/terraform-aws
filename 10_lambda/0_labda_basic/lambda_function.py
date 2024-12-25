@@ -1,4 +1,5 @@
 import json
+import logging
 
 def lambda_handler(event, context):
     """
@@ -8,6 +9,7 @@ def lambda_handler(event, context):
     :return: A response object.
     """
     print("Event: ", event)  # Log the input event for debugging.
+    logging.info("Executing Event: ", event)
 
     response = {
         "statusCode": 200,
