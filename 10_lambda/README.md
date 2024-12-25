@@ -1,4 +1,6 @@
 # AWS Lambda
+- [Automate zipping of Lambda code](README-automate_ziping_process.md)
+
 
 
 1. How many maximum lambda function I can create in an account?
