@@ -63,6 +63,21 @@ resource "aws_lambda_provisioned_concurrency_config" "my_provisioned_concurrency
   - For synchronous invocations: The caller receives a `429 Too Many Requests` error.
   - For asynchronous invocations: AWS retries the invocation with an exponential backoff.
 
+## Pricing for Lambda Concurrency
+There isn't a specific charge solely for "extra concurrency" itself; instead, the pricing is determined by the number of **requests** and the **duration** that your function is running, along with any costs incurred for **provisioned concurrency**.
+1. **Request Charges** <br/> Lambda charges per request, regardless of the number of concurrent executions:
+   - **First 1 million requests per month**: Free.
+   - **After the free tier**: $0.20 per 1 million requests.
+2. **Duration Charges** <br/> Lambda charges based on the execution duration of your function, which is the time it takes from when your function starts executing until it returns or terminates. The charge is calculated in **100ms increments**.
+   - **First 400,000 GB-seconds per month**: Free.
+   - **After the free tier**: $0.00001667 per GB-second. <br/> 
+
+    ### Example of Duration Pricing:
+   If you allocate 512 MB of memory to a function, and it runs for 1 second:
+   - **Memory usage**: 0.5 GB-seconds (512 MB = 0.5 GB)
+   - **Cost**: 0.5 GB-seconds × $0.00001667 per GB-second = $0.000008335
+
+
 ## Best Practices
 1. **Set Reserved Concurrency for Critical Functions** <br/> Prevents these functions from being throttled due to resource contention.
 2. **Use Provisioned Concurrency for Low-Latency Needs** <br/> Reduces cold start latency for performance-sensitive functions.

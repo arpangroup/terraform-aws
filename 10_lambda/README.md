@@ -4,18 +4,15 @@
 - Architecture (x86_64 / arm64)
 - Execution Role
 - Lambda Layers
-- .........
 - [Triggers](README-lambda_trigger.md) (`API Gateway`, `ALB`, `CloudFront`, `CodeCommit`, `CloudWatch Log`, `EventBridge`, `S3`, `SQS`, `SNS`, `DynamoDB` etc...)
 - Permissions
 - [Destinations](README-lambda_destinations.md)
 - [Environment Variables](README-lambda_automate_envs.md)
-- VPC
+- VPC - Create Lambda Function in a specific VPC?
 - Monitoring
 - [Concurrency](README-lambda_concurrency.md)
 - [Asynchronous Invocation](README-lambda_asynchronous_invocation)
 - [Retry](README-lambda_retry.md)
-- Database Proxies
--  State Machine
 - [AWS Lambda with Python vs Java](README-lambda_with_python_vs_java.md)
 - [Secure API Gateway Requests with AWS Lambda Authorizer](README-lambda_authentication.md)
 
@@ -173,22 +170,18 @@ Output:
 }
 ````
 
-1. How many maximum lambda function I can create in an account?
-2. What is concurrency?
-3. Create a Lambda function which will run every day at 10am and check
-    - if there is any new user created
-    - If any additional permission added to an existing IAM Roles
-    - If there is any GP2 based EBS volume in any account
-    - Also notify the result
-4. How to Autoscale LambdaFunction? Is it possible?
-5. How to ensure Lambda function can be execute with valid Authentication Header
-6. LambdaFunction in Java Vs Python performance comparison
-7. Create Lambda Function in a specific VPC?
-8. ** What is Concurrency in Lambda Function?**
-   - What is maximum concurrency?
-   - Pricing for extra concurrency?
-9. **Automate the Environment variables for Lambda function using Terraform or CI/CD pipeline**
-10. Asynchronous Invocation
-11. Send LambdaFunction Logs to CloudWatch
-12. Database Proxies
-13. State Machine
+
+## FAQs
+1. **How many maximum lambda function I can create in an account?** - 1,000 functions per region (default)
+   - **Default Account-Level Concurrency Limit**: 1,000 concurrent executions per AWS region.
+   - **Function-Level Concurrency Limits**: By default, Lambda functions share the account-level concurrency pool, meaning each function can potentially use all of the available concurrency
+   - **Lambda deployment package size limits** (50 MB for direct uploads, 250 MB for S3 uploads).
+   - **Lambda invocation payload size limits** (6 MB for synchronous invocations, 256 KB for asynchronous invocations).
+2. **How to Autoscale LambdaFunction?** AWS Lambda automatically scales by design  to handle varying traffic loads without needing any manual intervention.
+3. **How to ensure Lambda function can be execute with valid Authentication Header?** [answer](README-lambda_authentication.md)
+4. **LambdaFunction in Java Vs Python performance comparison** [answer](README-lambda_with_python_vs_java.md)
+5. Create a Lambda function which will run every day at 10am and check
+   - if there is any new user created
+   - If any additional permission added to an existing IAM Roles
+   - If there is any GP2 based EBS volume in any account
+   - Also notify the result
