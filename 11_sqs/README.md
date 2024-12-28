@@ -1,16 +1,13 @@
 # SQS
-- **Standard Vs FIFO Queue**
-  - **FIFO offers**: 
-    - **guaranteed in order processing**
-    - FIFO Queues prevent **duplicate messages**
-    - **Content based hashing**: Messages with same content are discarded
-    - **Message de-duplication-id**: messages with same provided **id** aed discarded
+- **Standard Vs [FIFO Queue](README-sqs_fifo.md)
 - [BacBackpressure control](README-sqs_backpressure.md)
+- Dead Letter Queue
 - **Permissions**: 
   - CreateQueue, TagQueue, SetQueueAttributes
   - **Resource**: Resource = "arn:aws:sqs:us-east-1:*"
 
-### Why use SQS over API call?
+
+## Why use SQS over API call to other service?
 - **Backpressure Control**: Consumers can choose the rate of processing
 - **Fire and Forget**: Publishers have no insight into client processing
 - **Eventual Guaranteed Processing**: Great for async or non-realtime apps

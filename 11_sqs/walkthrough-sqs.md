@@ -7,3 +7,6 @@
 ![sqs_4.png](../diagrams/sqs_4.png)
 ![img.png](../diagrams/sqs_5.png)
 ![img_1.png](../diagrams/sqs_6.png)
+
+GroupID in FIFO Queue (Send and receive messages):
+![sqs_fifo_group.png](../diagrams/sqs_fifo_group.png)
