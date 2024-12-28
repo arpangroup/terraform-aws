@@ -1,5 +1,7 @@
 import boto3
+from boto3.dynamodb.conditions import Attr, Key
 from botocore.exceptions import ClientError
+from datetime import datetime
 
 REGION_NAME = 'us-east-1'
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
@@ -41,7 +43,7 @@ def insert_item(user_id, name, email):
     try:
         response = table.put_item(
             Item={
-                'user_id': user_id,
+                'user_id': user_id, # Partition key
                 'name': name,
                 'email': email,
             }
