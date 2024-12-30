@@ -20,7 +20,7 @@ Before starting, ensure you have the following prerequisites:
    The following Terraform script will create a Lambda function that publishes a custom metric to AWS CloudWatch.
 
     ```hcl
-    # 2_ec2.tf
+    # ec2.tf
 
     provider "aws" {
       region = "us-east-1"
