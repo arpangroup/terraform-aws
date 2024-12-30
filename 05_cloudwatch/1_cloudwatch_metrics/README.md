@@ -20,3 +20,5 @@ You run an e-commerce website hosted on **AWS Elastic Load Balancer** (ELB) and 
 4. ### Application Metrics (Custom)
    - **CartCheckoutFailures**: Custom metric tracking the number of failed checkouts.
      - Example: If CartCheckoutFailures spike, it might indicate a payment gateway issue.
+
+
