@@ -1,3 +1,10 @@
+# EC2
+1. **Change EC2 Instance Type?** 
+   - yes possible for EBS backed instances. 
+   - Stop the instance --> Settings --> Change Instance Type --> Start
+2. Placement Group
+3. [Burstable Instances](https://www.youtube.com/watch?v=1tUiAO7UyXc)
+
 # EC2 + UserData + KeyPair + SG
 
 ````hcl
