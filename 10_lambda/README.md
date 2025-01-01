@@ -17,6 +17,9 @@
 - [Secure API Gateway Requests with AWS Lambda Authorizer](README-lambda_authentication.md)
 
 
+### Lambda Function [Best Practices](README-lambda_best_practices.md)
+
+
 ## Create a Lambda Function
 ````hcl
 # The Lambda Function
