@@ -9,7 +9,11 @@
 
 ## VPC
 - [Mini Project - Learn how to use VPC Flow logs to diagnose network issues](https://www.youtube.com/watch?v=4HvwQ1uoWEA&list=PLTk5ZYSbd9MiiBmPitRUGWIgnq9nm--GZ&index=9)
-- 
+
+
+## CloudWatch
+- [How To Create a CloudWatch Dashboard](https://youtu.be/5QK3FB1EsV0?si=I2We1NFD8zdO0kzl)
+- [Stream Your Cloudwatch Logs LIVE with Cloudwatch Live Tail](https://youtu.be/JYmwEfLioG8?si=6qGqMU-NA32bZZUK)
 
 
 ## Lambda
@@ -24,8 +28,10 @@
 - [Mini Project - Using Lambda and AWS X-Ray to debug ( serverless ) applications](https://www.youtube.com/watch?v=V1Fj8uEyp-E&list=PLTk5ZYSbd9MiiBmPitRUGWIgnq9nm--GZ&index=10)
 - Trigger Lambda -> SQS
 - SQS --> DynamoDB
+- [What is Lambda Throttling? (and how to fix it!)](https://youtu.be/2tmsyweB3k4?si=0Zi2VZOKEttlWCNq)
 
 ## DynamoDB
+- [DynamoDB GetItem vs Query API](https://youtu.be/twxM7WTfhGs?si=LMQ2nVmmex4XJEhI)
 - [Load, Save, Query, Delete, with DynamoDB Mapper](https://www.youtube.com/watch?v=m61Uo_PGwVc)
 - [Mini Project - Implement DynamoDB Triggers using Streams and Lambda](https://www.youtube.com/watch?v=WgqdkaTaC4M&list=PLTk5ZYSbd9MiiBmPitRUGWIgnq9nm--GZ&index=1)
 - 

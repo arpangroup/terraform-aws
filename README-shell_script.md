@@ -16,6 +16,7 @@ This tells the system to use Bash to execute the script.
 chmod +x script.sh
 ````
 
+---
 
 ## 3. Variables
 ````bash
@@ -23,6 +24,7 @@ VAR1="World"
 echo "Hello, $VAR1" # Single quote will not work
 ````
 
+---
 
 ## 4 Command line Arguments:
 ````bash
@@ -33,6 +35,8 @@ echo "First -> " $1
 echo "Second -> " $2
 ````
 Run the above script as `./arguments.sh Hello World`
+
+---
 
 ## 5. Input:
 ````bash
@@ -49,6 +53,8 @@ read -sp "Enter your password: " PASSWORD  # -s input without displaying on scre
 echo "Hello, $USERNAME" 
 ````
 
+---
+
 ## 6. Arithmetic Operators:
 ````bash
 read -p "Enter Number one: " n1
@@ -60,6 +66,7 @@ echo "$n1 + $n2 is = " $((n1 * n2))
 echo "$n1 + $n2 is = " $((n1 / n2))
 ````
 
+---
 
 ## 7. Conditions:
 ````bash
@@ -188,6 +195,8 @@ if [ -X "$FILE" ]; then
 fi
 ````
 
+---
+
 ## 8. Loops:
 ````bash
 for i in {1..5}; do
@@ -232,6 +241,7 @@ for HOSTS in $(cat hosts.txt); do
 done
 ````
 
+---
 
 ## 9. Functions:
 ````bash
@@ -241,6 +251,7 @@ greet() {
 greet "World"
 ````
 
+---
 
 ## 10. HERE DOC
 ````bash
@@ -257,3 +268,32 @@ cat <<EOF> file.txt
   You are logged in as: $(whoami)
 EOF
 ````
+
+---
+## 11. Linux Exit Status
+- [Linux Exit status | Connection Checking Shell Script Example](https://youtu.be/E6meVZoCuKY?si=N65gBNfA6Tr2YTVG)
+
+---
+
+## 12. Linux Redirects
+- [Linux Redirects | Linux Stdin Stdout Stderr | Linux I/O Redirects](https://youtu.be/TdPKIMmbe9I?si=Av3-sHQ1ALfqzKtl)
+
+## 13. AWK Command
+- [Master Linux AWK: From Basics to Advanced Techniques](https://youtu.be/F4Zo1NuE_rY?si=8u6yY-iGTd1MFro_)
+- [Mastering Linux AWK and CUT commands](https://youtu.be/dcF5Rqw_VZ4?si=hBRvwx1cJRYDsU4W)
+- [Linux AWK vs SED vs GREP](https://youtu.be/SJTJVb5w45E?si=8w47KK6RshsUa2sE)
+
+---
+
+## 14. SED Command (Stream Editor)
+- [Linux SED Command | SED Tutorial in Hindi | Linux for Beginners](https://youtu.be/ETF6CapGAvc?si=Y5Ig2lzzdtDLa3Rs)
+
+---
+
+## 15. VIM Editor
+- [Learn How to use vi / vim editor in Linux with examples in Hindi ](https://youtu.be/sUIoV48rxVE?si=tezZBUJtzAuVUIYl)
+- 
+
+
+## 15. How to Use Pipe in Linux | Linux TEE and XARGS Command
+- [How to Use Pipe in Linux | Linux TEE and XARGS Command](https://youtu.be/uF7hFCThf4g?si=f-nDI14oPrJpuATY)
