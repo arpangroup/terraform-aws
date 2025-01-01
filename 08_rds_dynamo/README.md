@@ -16,6 +16,7 @@
 - NoSQL Workbench
 - DynamoDB Streams
 - How DynamoDB internally store data
+- [Record Size Calculation](README-dynamodb_record_size_calculation.md)
 
 
 
