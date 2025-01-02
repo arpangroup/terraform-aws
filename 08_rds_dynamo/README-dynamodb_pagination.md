@@ -120,21 +120,44 @@ import java.util.Iterator;
 public class DynamoDBItemReader implements ItemReader<YourEntity> {
 
     private final DynamoDBMapper dynamoDBMapper;
-    private final DynamoDBScanExpression scanExpression;
+    private final DynamoDBQueryExpression<YourEntity> queryExpression;
+//    private final DynamoDBScanExpression scanExpression;
     private Iterator<YourEntity> iterator;
+    private AttributeValue lastEvaluatedKey;
 
-    public DynamoDBItemReader(DynamoDBMapper dynamoDBMapper) {
+    public DynamoDBItemReader(DynamoDBMapper dynamoDBMapper, DynamoDBQueryExpression<YourEntity> queryExpression) {
         this.dynamoDBMapper = dynamoDBMapper;
         this.scanExpression = new DynamoDBScanExpression();
+        this.queryExpression = queryExpression;
     }
 
     @Override
     public YourEntity read() {
-        if (iterator == null) {
+       /* if (iterator == null) {
             iterator = dynamoDBMapper.scan(YourEntity.class, scanExpression).iterator();
         }
 
-        return iterator.hasNext() ? iterator.next() : null;
+        return iterator.hasNext() ? iterator.next() : null;*/
+
+        if (iterator == null || (!iterator.hasNext() && lastEvaluatedKey != null)) {
+            fetchNextPage();
+        }
+
+        return (iterator != null && iterator.hasNext()) ? iterator.next() : null;
+    }
+
+    private void fetchNextPage() {
+        if (lastEvaluatedKey != null) {
+            queryExpression.setExclusiveStartKey(lastEvaluatedKey);
+        }
+
+        List<YourEntity> items = dynamoDBMapper.query(YourEntity.class, queryExpression);
+        if (!items.isEmpty()) {
+            iterator = items.iterator();
+        }
+
+        // Update the last evaluated key for pagination
+        lastEvaluatedKey = dynamoDBMapper.getLastEvaluatedKey();
     }
 }
 
@@ -176,7 +199,9 @@ public class BatchConfig {
 
     @Bean
     public ItemReader<YourEntity> reader(DynamoDBMapper dynamoDBMapper) {
-        return new DynamoDBItemReader(dynamoDBMapper);
+//        return new DynamoDBItemReader(dynamoDBMapper);
+        DynamoDBQueryExpression<YourEntity> queryExpression = buildQueryExpression("partition-key-value");
+        return new DynamoDBItemReader(dynamoDBMapper, queryExpression);
     }
 
     @Bean
@@ -209,6 +234,15 @@ public class BatchConfig {
         return jobBuilderFactory.get("job")
                 .start(step)
                 .build();
+    }
+
+    public DynamoDBQueryExpression<YourEntity> buildQueryExpression(String partitionKeyValue) {
+        YourEntity hashKeyEntity = new YourEntity();
+        hashKeyEntity.setId(partitionKeyValue); // Set partition key
+
+        return new DynamoDBQueryExpression<YourEntity>()
+                .withHashKeyValues(hashKeyEntity)
+                .withConsistentRead(false); // Use consistent reads if required
     }
 }
 
