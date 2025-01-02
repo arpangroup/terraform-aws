@@ -10,6 +10,8 @@
 ## VPC
 - [Mini Project - Learn how to use VPC Flow logs to diagnose network issues](https://www.youtube.com/watch?v=4HvwQ1uoWEA&list=PLTk5ZYSbd9MiiBmPitRUGWIgnq9nm--GZ&index=9)
 
+## API Gateway
+- [How To Add Throttling to API Gateway HTTP API ](https://youtu.be/sCXejDwPGY4?si=RenRHvAurjlRE1_t)
 
 ## CloudWatch
 - [How To Create a CloudWatch Dashboard](https://youtu.be/5QK3FB1EsV0?si=I2We1NFD8zdO0kzl)
