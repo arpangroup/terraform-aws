@@ -19,6 +19,8 @@
 
 ### Lambda Function [Best Practices](README-lambda_best_practices.md)
 
+---
+
 
 ## Create a Lambda Function
 ````hcl
@@ -91,6 +93,38 @@ resource "null_resource" "ZIP_LAMBDA" {
 }
 ````
 
+---
+
+## AWS Principals for Lambda Invocation from other services
+
+````hcl
+# The aws_lambda_permission resource in Terraform is used to grant permissions to other AWS services or accounts to invoke an AWS Lambda function.
+# Grant the S3 bucket permission to invoke the Lambda function
+# principal:
+resource "aws_lambda_permission" "allow_s3" {
+  statement_id  = "AllowS3Invoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.example.function_name
+  principal     = "s3.amazonaws.com"  # Allows S3 to invoke the function. ["sns.amazonaws.com", "events.amazonaws.com", "logs.amazonaws.com", "cognito-idp.amazonaws.com", "apigateway.amazonaws.com"]
+  source_arn    = aws_s3_bucket.example.arn # Optional: Restricts the permission to a specific resource. This ensures the Lambda function can only be invoked by specific events or entities.
+#   source_account = "" # optional
+}
+````
+
+This table lists common AWS services that can invoke a Lambda function and their corresponding principals.
+
+| Principal                | Purpose                                          |
+|--------------------------|--------------------------------------------------|
+| `s3.amazonaws.com`       | Allow S3 to invoke the Lambda function.          |
+| `sns.amazonaws.com`      | Allow SNS to invoke the Lambda function.         |
+| `events.amazonaws.com`   | Allow EventBridge (CloudWatch Events) to invoke. |
+| `logs.amazonaws.com`     | Allow CloudWatch Logs to invoke the function.    |
+| `cognito-idp.amazonaws.com` | Allow Amazon Cognito triggers to invoke Lambda. |
+| `apigateway.amazonaws.com` | Allow API Gateway to invoke the Lambda function. |
+
+
+
+---
 
 ## Output Details of an aws_lambda_function 
 ````hcl
