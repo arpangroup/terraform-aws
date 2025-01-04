@@ -17,6 +17,20 @@ An instance profile, on the other hand, defines “who am I?” **Just like an I
 
 > NOTE: An EC2 instance can have only one instance profile attached to it at a time.
 
+---
+
+## Instance profile vs AssumeRole:
+- **AssumeRole**: Describes the behavior and characteristics of using AssumeRole
+- **Instance Profile**: Describes the behavior and characteristics of using an instance profile for EC2.
+
+| Feature                  | AssumeRole                                      | Instance Profile                                  |
+|--------------------------|------------------------------------------------|--------------------------------------------------|
+| **Purpose**              | Manually assume a role to get credentials      | Automatically assign a role to EC2              |
+| **Use Case**             | Cross-account access, delegation               | Access AWS services from EC2 instances          |
+| **Action**               | Requires `sts:AssumeRole` API call             | No explicit API call; uses IMDS                 |
+| **Temporary Credentials**| Yes, obtained explicitly                       | Yes, provided automatically                     |
+| **Principal Type**       | Any (user, service, role)                      | Only EC2 instances                              |
+| **Security**             | Requires explicit trust and assumption         | Securely linked to EC2 metadata                 |
 
 ## Set up IAM Role for the EC2 Instance
 To enable the CloudWatch agent to send data from the instance, you must attach an IAM role to the instance. The role to attach is `CloudWatchAgentServerRole`. You should have created this role previously.
