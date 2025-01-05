@@ -22,4 +22,3 @@ resource "aws_s3_bucket_notification" "example" {
     aws_lambda_permission.allow_s3
   ]
 }
-
