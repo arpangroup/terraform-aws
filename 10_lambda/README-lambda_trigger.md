@@ -49,6 +49,11 @@
 ---
 
 ## Example1: Trigger Lambda Function from S3
+To trigger an AWS Lambda function from Amazon S3, you need to:
+1. Create an S3 Bucket: The bucket where objects will be uploaded.
+2. Create a Lambda Function: The function that will be triggered by S3 events.
+3. Grant S3 Permission to Invoke the Lambda Function: Allow S3 to invoke the Lambda function.
+4. Configure S3 Bucket Notification: Set up the S3 bucket to trigger the Lambda function when specific events occur (e.g., object creation).
 ````hcl
 resource "aws_lambda_function" "example_lambda" {
   function_name = "s3-trigger-lambda"
