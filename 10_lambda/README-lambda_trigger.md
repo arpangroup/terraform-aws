@@ -208,3 +208,12 @@ resource "aws_lambda_function" "example_lambda" {
   source_code_hash = filebase64sha256("lambda_function.zip")
 }
 ````
+
+
+## Example3: Trigger Lambda Function from DynamoDB
+
+## Example4: Trigger Lambda Function from EventBridge
+
+## Example5: Trigger Lambda Function from API Gateway
+
+## Example6: Trigger Lambda Function from Step Function
