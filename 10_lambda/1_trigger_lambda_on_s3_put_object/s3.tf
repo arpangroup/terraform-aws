@@ -19,7 +19,7 @@ resource "aws_s3_bucket_notification" "example" {
   }
 
   depends_on = [
-    aws_lambda_permission.allow_s3
+    aws_lambda_permission.allow_s3_invoke
   ]
 }
 

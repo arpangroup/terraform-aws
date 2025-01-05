@@ -46,6 +46,19 @@ resource "aws_iam_role" "TF_lambda_exec_role" {
   })
 }
 
+
+# Attach policy to allow Lambda function to write logs to CloudWatch
+/*resource "aws_iam_role_policy_attachment" "lambda_logging" {
+  role       = aws_iam_role.TF_lambda_exec_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}*/
+
+resource "aws_iam_policy_attachment" "lambda_policy" {
+  name       = "lambda-basic-execution-attachment"
+  roles      = [aws_iam_role.TF_lambda_exec_role.name]
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
 #.......................................
 resource "aws_iam_role_policy" "lambda_policy" {
   name   = "lambda-policy"
@@ -77,19 +90,6 @@ resource "aws_iam_role_policy" "lambda_policy" {
   })
 }
 #.......................................
-
-# Attach policy to allow Lambda function to write logs to CloudWatch
-/*resource "aws_iam_role_policy_attachment" "lambda_logging" {
-  role       = aws_iam_role.TF_lambda_exec_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-}*/
-
-resource "aws_iam_policy_attachment" "lambda_policy" {
-  name       = "lambda-basic-execution-attachment"
-  roles      = [aws_iam_role.TF_lambda_exec_role.name]
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-}
-
 ##################################################################
 ########### IAM PERMISSIONS FOR LAMBDA to ACCESS SQS #############
 ##################################################################

@@ -11,6 +11,8 @@
 - [S3 Storage Calculator](README-s3_storage_calculator.md)
 - [Transfer acceleration](README-s3_transfer_acceleration.md)
 - **Event notifications** (Send notification when specific event occur on your bucket)
+  - Destination: Lambda, SNS Topic, SQS, 
+  - EventBridge: send all events to EventBridge
 - Requester Pays
 - Static Website Hosting
 - Permission Policies
