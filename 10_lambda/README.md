@@ -4,8 +4,9 @@
 - Architecture (x86_64 / arm64)
 - Execution Role
 - Lambda Layers
-- [Triggers](README-lambda_trigger.md) (`API Gateway`, `ALB`, `CloudFront`, `CodeCommit`, `CloudWatch Log`, `EventBridge`, `S3`, `SQS`, `SNS`, `DynamoDB` etc...)
-- Permissions
+- [Triggers](README-lambda_trigger.md) - service or resource that invokes your function <br/> (`API Gateway`, `ALB`, `CloudFront`, `CodeCommit`, `CloudWatch Log`, `EventBridge`, `S3`, `SQS`, `SNS`, `DynamoDB` etc...)
+- **Permissions** (Execution role + Resource-based policy statements)
+  - **Resource-based policies** grant other AWS accounts and services permissions to access your Lambda resources
 - [Destinations](README-lambda_destinations.md)
 - [Environment Variables](README-lambda_automate_envs.md)
 - VPC - Create Lambda Function in a specific VPC?
