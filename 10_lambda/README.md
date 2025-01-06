@@ -5,6 +5,7 @@
 - Execution Role
 - Lambda Layers
 - [Triggers](README-lambda_trigger.md) - service or resource that invokes your function <br/> (`API Gateway`, `ALB`, `CloudFront`, `CodeCommit`, `CloudWatch Log`, `EventBridge`, `S3`, `SQS`, `SNS`, `DynamoDB` etc...)
+- [**Event Source Mapping**](README-lambda_event_source_mapping.md)
 - **Permissions** (Execution role + Resource-based policy statements)
   - **Resource-based policies** grant other AWS accounts and services permissions to access your Lambda resources
 - [Destinations](README-lambda_destinations.md)
