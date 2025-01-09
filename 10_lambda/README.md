@@ -167,6 +167,11 @@ LambdaContext(
 ````
 
 
+## Request Payload of S3 event
+````json
+````
+
+
 ---
 
 ## Output Details of an aws_lambda_function 
