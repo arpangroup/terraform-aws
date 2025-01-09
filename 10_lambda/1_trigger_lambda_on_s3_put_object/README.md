@@ -1,7 +1,7 @@
 # Trigger Lambda on S3 Put Bucket
-- Option1: Add the trigger on Lambda Console or,
-- Option2: S3 Bucket **EventNotification** (Bucket > Properties > Event notifications)
-
+- Option1: Add the trigger on Lambda Console or (not possible using Terraform),
+- Option2: S3 Bucket **EventNotification** (`Bucket > Properties > Event notifications`)
+- Option3: EventBridge rule to capture S3 PutObject events
 
 ### Option1: using AWS console: (Not possible using Terraform)
 1. Add Trigger: Select S3 > BucketName | EventTypes==> PUT | Check I acknowledge > Add
