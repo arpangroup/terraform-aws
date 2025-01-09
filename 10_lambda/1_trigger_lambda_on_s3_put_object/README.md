@@ -1,15 +1,57 @@
-# Trigger Lambda on S3 Put Bucket 
+# Trigger Lambda on S3 Put Bucket
+- Option1: Add the trigger on Lambda Console or,
+- Option2: S3 Bucket **EventNotification** (Bucket > Properties > Event notifications)
 
-**Use Case-1**
-![img.png](img.png)
 
-**Use Case-2**
-![img_1.png](img_1.png)
+### Option1: using AWS console: (Not possible using Terraform)
+1. Add Trigger: Select S3 > BucketName | EventTypes==> PUT | Check I acknowledge > Add
+2. Add following policy to IAM role to allow S3 to invoke the Lambda function
+   - Lambda function > Configuration > Permissions > Execution role.
+   - Add following policy to the IAM role
+    ````json
+    {
+      "Effect": "Allow",
+      "Action": "lambda:InvokeFunction",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:example-lambda-function",
+      "Principal": {
+        "Service": "s3.amazonaws.com"
+      },
+      "Condition": {
+       "StringEquals": {
+        "AWS:SourceAccount": "123456789012"
+       }
+     }
+    }
+    ````
+   The same permission can be add using below terraform code:
+    ````hcl
+    resource "aws_lambda_permission" "allow_s3" {
+      statement_id  = "AllowExecutionFromS3"
+      action        = "lambda:InvokeFunction"
+      function_name = aws_lambda_function.TF_LAMBDA_EXAMPLE.function_name
+      principal     = "s3.amazonaws.com"
+      source_arn    = "arn:aws:s3:::tf-example-bucket123"
+    }
+    ````
 
-**Use Case-3**
-![img_2.png](img_2.png)
+### Option2: Configure S3 Bucket EventNotification on S3 Bucket
+````hcl
+resource "aws_s3_bucket_notification" "example" {
+  bucket = aws_s3_bucket.example.id
 
----
+  lambda_function {
+    lambda_function_arn = aws_lambda_function.TF_example_lambda.arn
+    events              = ["s3:ObjectCreated:Put"]
+
+    filter_suffix = ".txt" # Optional: Trigger only for .txt files
+  }
+
+  depends_on = [
+    aws_lambda_permission.allow_s3_invoke
+  ]
+}
+````
+
 
 ## Step1: Create S3 Bucket
 ````hcl
@@ -140,3 +182,43 @@ public class S3EventHandler implements RequestHandler<S3Event, Boolean> {
 - Create S3 Client
 - Call GetObject method of S3 SDK
 - Process the inputStream
+
+---
+
+## S3 Event:
+````json
+{
+   "eventVersion": "2.1",
+   "eventSource": "aws:s3",
+   "awsRegion": "us-east-1",
+   "eventTime": "2025-01-09T18:48:38.476Z",
+   "eventName": "ObjectCreated:Put",
+   "userIdentity": {
+      "principalId": "AWS:AIDAXEVXYWT4BQ7Q2I3JL"
+   },
+   "requestParameters": {
+      "sourceIPAddress": "103.120.51.119"
+   },
+   "responseElements": {
+      "x-amz-request-id": "GKXRZAQPGZVJ2V0Y",
+      "x-amz-id-2": "2vJ/k22IDaBxgoM5ws1Rgalx0GW3DmngD+Ts3YuE28tx50FsUc5u+lzD747/szttjCQfYp1ygMPifImruzUQ9RqLte06qHmVAxGfVQWwof4="
+   },
+   "s3": {
+      "s3SchemaVersion": "1.0",
+      "configurationId": "6c446218-f819-4707-a5b6-00ddfb6a8bce",
+      "bucket": {
+         "name": "tf-example-bucket123",
+         "ownerIdentity": {
+            "principalId": "AJSMJUXC7HQUP"
+         },
+         "arn": "arn:aws:s3:::tf-example-bucket123"
+      },
+      "object": {
+         "key": "elk.png",
+         "size": 186552,
+         "eTag": "66da74717343fc02774e782674ef0077",
+         "sequencer": "0067801A065FBDB40F"
+      }
+   }
+}
+````
