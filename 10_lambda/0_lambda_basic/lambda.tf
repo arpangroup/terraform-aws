@@ -52,10 +52,3 @@ resource "aws_lambda_function_url" "my_lambda_url" {
   function_name      = aws_lambda_function.TF_LAMBDA_EXAMPLE.function_name
   authorization_type = "NONE" # Public access (change to "AWS_IAM" for IAM-based access control)
 }
-
-
-resource "null_resource" "ZIP_LAMBDA" {
-  provisioner "local-exec" {
-    command = "echo CurrentDirectory: %CD% && zip ./lambda_function.zip ./lambda_function.py"
-  }
-}
