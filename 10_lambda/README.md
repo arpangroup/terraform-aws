@@ -17,7 +17,7 @@
 - [Retry](README-lambda_retry.md)
 - [AWS Lambda with Python vs Java](README-lambda_with_python_vs_java.md)
 - [Secure API Gateway Requests with AWS Lambda Authorizer](README-lambda_authentication.md)
-
+- [Maximum Lambda function Limit in an Account]()
 
 ### Lambda Function [Best Practices](README-lambda_best_practices.md)
 
@@ -124,6 +124,47 @@ This table lists common AWS services that can invoke a Lambda function and their
 | `cognito-idp.amazonaws.com` | Allow Amazon Cognito triggers to invoke Lambda. |
 | `apigateway.amazonaws.com` | Allow API Gateway to invoke the Lambda function. |
 
+
+
+---
+
+## Print the event and context object
+````python
+import json
+
+def lambda_handler(event, context):
+   print("===========EVENT=========")
+   print(event)
+   print("===========CONTEXT=========")
+   print(context)
+   # TODO implement
+   return {
+      'statusCode': 200,
+      'body': json.dumps('Hello from Lambda!')
+   }
+````
+
+Output:
+````console
+START RequestId: a8269e71-12e3-4be7-982f-ccf0e8e3296b Version: $LATEST
+===========EVENT=========
+{'key1': 'value1', 'key2': 'value2', 'key3': 'value3'}
+===========CONTEXT=========
+LambdaContext(
+    aws_request_id='a8269e71-12e3-4be7-982f-ccf0e8e3296b',
+    log_group_name='/aws/lambda/DemoLambda',
+    log_stream_name='2025/01/09/[$LATEST]060cfe3629ba4c1b9853a80faa66138a',
+    function_name='DemoLambda',
+    memory_limit_in_mb=128,
+    function_version='$LATEST',
+    invoked_function_arn='arn:aws:lambda:us-east-1:491085411576:function:DemoLambda',
+    client_context=None,
+    identity=CognitoIdentity(
+        cognito_identity_id=None,
+        cognito_identity_pool_id=None
+    )
+)
+````
 
 
 ---

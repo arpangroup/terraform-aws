@@ -20,6 +20,7 @@
 
 ## Lambda
 - [S3 Put Object ---> Invoke Lambda](https://www.youtube.com/watch?v=3oV4Nj_ruOA&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=2)
+- SQS ---> Lambda using EventSourceMapping
 - [AWS Lambda Error handling](https://www.youtube.com/watch?v=CiRs3wA1BXM&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=3)
 - [DLQ-Lambda Error Handling for Async Events](https://www.youtube.com/watch?v=EB2OWQhWhIs&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=4)
 - [AWS Lambda Function URLs Demo ](https://www.youtube.com/watch?v=zAMPNV6F2cI&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=6)
@@ -33,6 +34,7 @@
 - [What is Lambda Throttling? (and how to fix it!)](https://youtu.be/2tmsyweB3k4?si=0Zi2VZOKEttlWCNq)
 
 ## DynamoDB
+- [DynamoDB under the hood - How does it works](https://youtu.be/ZhXqNcbR4n0?si=CLLlMGM6U_Qwh9xq)
 - [DynamoDB GetItem vs Query API](https://youtu.be/twxM7WTfhGs?si=LMQ2nVmmex4XJEhI)
 - [Load, Save, Query, Delete, with DynamoDB Mapper](https://www.youtube.com/watch?v=m61Uo_PGwVc)
 - [Mini Project - Implement DynamoDB Triggers using Streams and Lambda](https://www.youtube.com/watch?v=WgqdkaTaC4M&list=PLTk5ZYSbd9MiiBmPitRUGWIgnq9nm--GZ&index=1)
