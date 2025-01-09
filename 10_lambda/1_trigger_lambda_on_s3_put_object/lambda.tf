@@ -42,7 +42,8 @@ resource "aws_lambda_function" "TF_LAMBDA_EXAMPLE" {
 
   environment {
     variables = {
-      KEY = "value"
+      KEY = "value",
+      BUCKET_NAME = "tf-example-bucket123"
     }
   }
 }
