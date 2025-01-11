@@ -185,7 +185,7 @@ public class S3EventHandler implements RequestHandler<S3Event, Boolean> {
 
 ---
 
-## S3 Event:
+## S3 Event Example:
 ````json
 {
    "eventVersion": "2.1",
@@ -220,5 +220,27 @@ public class S3EventHandler implements RequestHandler<S3Event, Boolean> {
          "sequencer": "0067801A065FBDB40F"
       }
    }
+}
+````
+
+---
+
+## SQS Event Example:
+````json
+{
+   "messageId": "51f8efe4-4495-4689-a046-b26481ca64c9",
+   "receiptHandle": "SDSDSSDSNBVNDCHGDMN",
+   "body": "Hello World",
+   "attributes": {
+      "ApproximateReceiveCount": "1",
+      "SentTimestamp": "1736615169505",
+      "SenderId": "AGHGNYVNDGFSOSYREN",
+      "ApproximateFirstReceiveTimestamp": "1736615169569"
+   },
+   "messageAttributes": {},
+   "md5OfBody": "b30a8dc266e0754105b9x756712349be72e3fe5",
+   "eventSource": "aws:sqs",
+   "eventSourceARN": "arn:aws:sqs:us-east-1:<ACCOUNT_ID>:tf-example-queue",
+   "awsRegion": "us-east-1"
 }
 ````
