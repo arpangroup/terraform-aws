@@ -1,4 +1,4 @@
-# Create SQS
+/*# Create SQS
 resource "aws_sqs_queue" "TF_example_queue" {
   name = "tf-example-queue"
 }
@@ -9,4 +9,4 @@ resource "aws_lambda_event_source_mapping" "example_mapping" {
   function_name    = aws_lambda_function.TF_LAMBDA_EXAMPLE.arn
   enabled          = true
   batch_size       = 10 # Number of messages to process at once
-}
+}*/

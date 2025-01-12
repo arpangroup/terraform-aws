@@ -9,6 +9,7 @@ resource "aws_iam_role_policy_attachment" "s3_read_only_access" {
 
 # Optional: Allow Lambda function to access SQS if we want to use sqs as an event source
 # ReceiveMessage, DeleteMessage, GetQueueAttributes, CreateLogGroup, CreateLogStream, PutLogEvents
+# Only if we use S3 to trigger Lambda Function
 resource "aws_iam_role_policy_attachment" "sqs_access" {
   role       = aws_iam_role.TF_lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaSQSQueueExecutionRole"
@@ -49,11 +50,13 @@ resource "aws_iam_role_policy_attachment" "sqs_access" {
 
 
 # Grant S3 permission to invoke the Lambda function
+# Only if we use S3 to trigger Lambda Function
 resource "aws_lambda_permission" "allow_s3_invoke" {
   statement_id  = "AllowExecutionFromS3"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.TF_LAMBDA_EXAMPLE.function_name
-  principal     = "s3.amazonaws.com"                  # for EventBridge: "events.amazonaws.com"
+  principal     = "s3.amazonaws.com"                  # for EventBridge: "events.amazonaws.com", "scheduler.amazonaws.com"
+  #source_arn   = aws_scheduler_schedule.TF_example_schedule.arn
   source_arn    = "arn:aws:s3:::tf-example-bucket123" # for EventBridge: <CLOUDWATCH_EVENT_BRIDGE_RULE_ARN>
 }
 

@@ -1,6 +1,6 @@
 # Step1: Create an IAM role for the Lambda function
 resource "aws_iam_role" "TF_lambda_role" {
-  name = "lambda-execution-role"
+  name = "tf_lambda-execution-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
