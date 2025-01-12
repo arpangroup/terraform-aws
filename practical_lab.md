@@ -21,11 +21,7 @@
 ## Lambda
 - [AWS Lambda Error handling](https://www.youtube.com/watch?v=CiRs3wA1BXM&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=3)
 - [DLQ-Lambda Error Handling for Async Events](https://www.youtube.com/watch?v=EB2OWQhWhIs&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=4)
-- [AWS Lambda Function URLs Demo ](https://www.youtube.com/watch?v=zAMPNV6F2cI&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=6)
-- [AWS Lambda Function URLs Demo ](https://www.youtube.com/watch?v=zAMPNV6F2cI&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=7)
-- [Schedule AWS Lambda Functions Using EventBridge](https://www.youtube.com/watch?v=-ResiAcM8pg&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=8)
 - [Trigger Lambda -> SNS](https://www.youtube.com/watch?v=Jh_jrcOpF-I&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=9)
-- 
 - [Mini Project - Using Lambda and AWS X-Ray to debug ( serverless ) applications](https://www.youtube.com/watch?v=V1Fj8uEyp-E&list=PLTk5ZYSbd9MiiBmPitRUGWIgnq9nm--GZ&index=10)
 - Trigger Lambda -> SQS
 - SQS --> DynamoDB
@@ -33,6 +29,8 @@
 - 
 - [S3 Put Object ---> Invoke Lambda](https://www.youtube.com/watch?v=3oV4Nj_ruOA&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=2)
 - SQS ---> Lambda using EventSourceMapping
+- [AWS Lambda Function URLs Demo ](https://www.youtube.com/watch?v=zAMPNV6F2cI&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=7)
+- [Schedule AWS Lambda Functions Using EventBridge](https://www.youtube.com/watch?v=-ResiAcM8pg&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=8)
 
 
 ## DynamoDB
