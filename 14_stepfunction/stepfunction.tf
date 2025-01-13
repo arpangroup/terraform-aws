@@ -1,7 +1,22 @@
+# Read the JSON definition file
+# Templatefile Function: The templatefile function reads the JSON file and replaces placeholders with actual values (e.g., Lambda ARNs)
+# Local Variable: he local.step_function_definition variable stores the processed JSON definition.
+locals {
+  step_function_definition = templatefile("step_function_definition.json", {
+    validate_order_lambda_arn     = aws_lambda_function.validate_order.arn
+    process_payment_lambda_arn    = aws_lambda_function.process_payment.arn
+    prepare_shipment_lambda_arn   = aws_lambda_function.prepare_shipment.arn
+    notify_customer_lambda_arn    = aws_lambda_function.notify_customer.arn
+    handle_error_lambda_arn       = aws_lambda_function.handle_error.arn
+  })
+}
+
+
 # Step Function Definition
 resource "aws_sfn_state_machine" "order_processing" {
   name     = "OrderProcessingWorkflow"
   role_arn = aws_iam_role.step_function_role.arn
+#   definition = local.step_function_definition
 
   definition = <<EOF
   {
