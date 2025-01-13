@@ -293,7 +293,7 @@ def error_handler(handler, event, context):
 
 
 ---
-## 1. ASynchronous Error:
+## 1. Asynchronous Error:
 - Retry 2 times after failure
 - Destinations
   - DLQ or
