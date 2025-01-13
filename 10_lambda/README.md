@@ -90,7 +90,7 @@ See [Automate zipping of Lambda code](README-lambda_automate_ziping_process)
 # Create Zip file locally
 resource "null_resource" "ZIP_LAMBDA" {
   provisioner "local-exec" {
-    command = "echo CurrentDirectory: %CD% && zip ./lambda_function.zip ./lambda_function.py"
+    command = "echo CurrentDirectory: %CD% && zip ./lambda_function.zip ./lambda_retry_sync.py"
   }
 }
 ````

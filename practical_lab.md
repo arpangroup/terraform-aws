@@ -20,6 +20,10 @@
 
 ## Lambda
 - [AWS Lambda Error handling](https://www.youtube.com/watch?v=CiRs3wA1BXM&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=3)
+- [AWS Lambda Powertools](https://youtu.be/dH2GP6Lydj8?si=bZ66y9VmelawL3sm)
+- IDEMPOTENCY on AWS Lambda
+- [Optimizing the Serverless Architecture with Circuit breaker & Idempotent patterns](https://youtu.be/vzoYAGQUSyw?si=wHW-LZxH5RYNp6ic)
+- X-Ray - Traces
 - [DLQ-Lambda Error Handling for Async Events](https://www.youtube.com/watch?v=EB2OWQhWhIs&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=4)
 - [Trigger Lambda -> SNS](https://www.youtube.com/watch?v=Jh_jrcOpF-I&list=PLLv1Hn1N3bRzke3cYLX_yl9CEEr0J0bf7&index=9)
 - [Mini Project - Using Lambda and AWS X-Ray to debug ( serverless ) applications](https://www.youtube.com/watch?v=V1Fj8uEyp-E&list=PLTk5ZYSbd9MiiBmPitRUGWIgnq9nm--GZ&index=10)
@@ -38,7 +42,7 @@
 - [DynamoDB GetItem vs Query API](https://youtu.be/twxM7WTfhGs?si=LMQ2nVmmex4XJEhI)
 - [Load, Save, Query, Delete, with DynamoDB Mapper](https://www.youtube.com/watch?v=m61Uo_PGwVc)
 - [Mini Project - Implement DynamoDB Triggers using Streams and Lambda](https://www.youtube.com/watch?v=WgqdkaTaC4M&list=PLTk5ZYSbd9MiiBmPitRUGWIgnq9nm--GZ&index=1)
-- 
+- [DynamoDB Mapper ](https://youtu.be/m61Uo_PGwVc?si=8lySByKDAvdC_lE4)
 
 ## Code Pipeline
 -  [Mini Project - Build a full Deployment pipeline using CodeCommit, Code Deploy and Code Pipeline](https://www.youtube.com/watch?v=MDMH_XXDbrI&list=PLTk5ZYSbd9MjkP6-x8sbJ00wJyyhzk0oi&index=2)

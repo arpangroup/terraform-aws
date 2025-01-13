@@ -83,7 +83,7 @@ Before starting, ensure you have the following prerequisites:
    Below is the Python Lambda function code that publishes custom metrics to CloudWatch.
 
     ```python
-    # lambda_function.py
+    # lambda_retry_sync.py
 
     import boto3
     import time
@@ -130,7 +130,7 @@ Before starting, ensure you have the following prerequisites:
 1. Zip the Lambda function code into a deployment package:
 
    ```bash
-   zip lambda_function.zip lambda_function.py
+   zip lambda_function.zip lambda_retry_sync.py
    ```
 
 ### Step 4: Set Up Lambda Function Execution

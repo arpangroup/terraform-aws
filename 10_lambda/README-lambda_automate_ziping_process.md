@@ -31,7 +31,7 @@ def create_zip(zip_name, files):
     print(f"{zip_name} created successfully.")
 
 # Files to include in the zip
-files_to_zip = ["lambda_function.py"]
+files_to_zip = ["lambda_retry_sync.py"]
 
 # Output zip file name
 zip_name = "lambda_function.zip"
@@ -51,7 +51,7 @@ Use the `local-exec` provisioner in Terraform to automate zipping during deploym
 # local-exec provisioner in Terraform to automate zipping
 resource "null_resource" "zip_lambda" {
   provisioner "local-exec" {
-    command = "zip lambda_function.zip lambda_function.py"
+    command = "zip lambda_function.zip lambda_retry_sync.py"
   }
 }
 
@@ -91,7 +91,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Zip Lambda code
-        run: zip lambda_function.zip lambda_function.py
+        run: zip lambda_function.zip lambda_retry_sync.py
 
       - name: Deploy using Terraform
         run: terraform apply -auto-approve
