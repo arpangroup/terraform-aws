@@ -63,4 +63,24 @@
 ## System Manager
 - [Mini Project - Learn how to use AWS Systems Manager](https://www.youtube.com/watch?v=B2MecqC5nJA&list=PLTk5ZYSbd9MiiBmPitRUGWIgnq9nm--GZ&index=8)
 - [Secrets Manager vs Parameter Store: Which Should You Use?](https://youtu.be/ULU2cRQI4hY?si=vw2O3_-tEUPixaqf)
+
+
+## Event Bridge
+- [Amazon EventBridge Deep Dive Series | Lab1: Create Event bus, Rule & Test](https://www.youtube.com/watch?v=y9Xzi6KyRrc&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=13)
+- [Amazon EventBridge Deep Dive Series | Lab2 EventBridge Rule for API Destination](https://www.youtube.com/watch?v=xsT0XDOwx9M&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=12)
+- [Amazon EventBridge Deep Dive Series | Lab3: EventBridge Rule for Step Function](https://www.youtube.com/watch?v=M41Axyas5pk&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=11)
+- [Amazon EventBridge Deep Dive Series | Lab4 EventBridge Rule for SNS SQS](https://www.youtube.com/watch?v=fq4L2vXJhfw&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=10)
+- [Amazon EventBridge Deep Dive Series | Lab5 EventBridge Schedule](https://www.youtube.com/watch?v=f7iuK1IRfhI&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=9)
+- [Amazon EventBridge Deep Dive Series | Lab6 EventBridge Schema Registry](https://www.youtube.com/watch?v=rDONGca1hGo&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=8)
+- [Amazon EventBridge Deep Dive Series | Lab7 Events Archive and Replay](https://www.youtube.com/watch?v=7swbqPIZxY4&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=7)
+- [Amazon EventBridge Deep Dive Series | Lab9 EventBridge Rule – Lambda Destination](https://www.youtube.com/watch?v=RNN9wHpXcg8&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=6)
+- [Amazon EventBridge Deep Dive Series | Lab10 EventBridge Rule – Lambda Error Handling](https://www.youtube.com/watch?v=jbjv-Sq4N64&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=5)
+- [Amazon EventBridge Deep Dive Series | Lab11 SNS Pub Sub Architecture with SQS](https://www.youtube.com/watch?v=zYKstzbMGaY&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=4)
+- [Amazon EventBridge Deep Dive Series | Lab12 SNS Pub Sub –Message Filtering](https://www.youtube.com/watch?v=kyWbdImD52A&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=3)
+- [Amazon EventBridge Deep Dive Series | Lab13 SNS Pub Sub – Advanced Message Filtering](https://www.youtube.com/watch?v=Sue2XRvJ2QQ&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=2)
+- [Amazon EventBridge Deep Dive Series | Lab14 SNS Pub Sub Error Handling](https://www.youtube.com/watch?v=XJyFnf5jq_s&list=PL8lTMiBX0pTYLkAwsx-n3g_xWAM3Kx-Ga&index=1)
 - 
+
+
+
+![img.png](img.png)

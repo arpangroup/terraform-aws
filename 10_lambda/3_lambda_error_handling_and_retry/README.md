@@ -302,7 +302,17 @@ def error_handler(handler, event, context):
   - MaximumRecordAge
   - MaximumRetryAttempts
   - BisectBatchOnFunctionError
-  
+
+## Amazon SQS Event Source:
+**Retry behavior**: until message expires
+- Default: retry all message in batch
+- Function can delete completed messages
+
+
+## Step Function Event Source:
+- Retry behavior  : Configurable
+- Specify using **Retry**, by error type
+- 
 
 --- 
 
