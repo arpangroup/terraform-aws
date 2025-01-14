@@ -58,7 +58,7 @@
 
 ## S3
 - [Mini Project - Learn how to Implement S3 Multi-Region Access points](https://www.youtube.com/watch?v=UUleX4pXLVo&list=PLTk5ZYSbd9MiiBmPitRUGWIgnq9nm--GZ&index=6)
-
+- [Why should you use S3 presigned URLs? (A full demo included)](https://youtu.be/ctnD5Uzx65w?si=2RuR3k1t8mqairir)
 
 ## System Manager
 - [Mini Project - Learn how to use AWS Systems Manager](https://www.youtube.com/watch?v=B2MecqC5nJA&list=PLTk5ZYSbd9MiiBmPitRUGWIgnq9nm--GZ&index=8)
