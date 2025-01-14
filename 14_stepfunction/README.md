@@ -1,6 +1,8 @@
 # Stepfunction
+- [AWS Step Functions Crash Course | Step by Step Tutorial](https://youtu.be/jXxKRd_9nC0?si=_ogWY1HXfdUf9Wyd)
 
 ### Order Processing System
+![stepfunction_order_processing.png](../diagrams/stepfunction_order_processing.png)
 1. **Validate Order**: Validate the order details (e.g., check if the items are in stock, validate payment).
 2. **Process Payment**: Charge the customer's payment method.
 3. **Prepare Shipment**: Generate a shipping label and notify the warehouse.

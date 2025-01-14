@@ -1,56 +1,53 @@
 # Lambda Functions for Each Step
 resource "aws_lambda_function" "validate_order" {
-  filename      = "validate_order.zip"
+  filename      = "${path.module}/lambda_codes/archives/validate_order.zip"
   function_name = "ValidateOrder"
   role          = aws_iam_role.lambda_exec_role.arn
-  handler       = "index.handler"
-  runtime       = "nodejs14.x"
-
-  source_code_hash = filebase64sha256("validate_order.zip")
+  handler       = "validate_order.lambda_handler"
+  runtime       = "python3.9"
+  depends_on    = [null_resource.ZIP_LAMBDA]
+#   source_code_hash = filebase64sha256("validate_order.zip")
 }
 
 resource "aws_lambda_function" "process_payment" {
-  filename      = "process_payment.zip"
+  filename      = "${path.module}/lambda_codes/archives/process_payment.zip"
   function_name = "ProcessPayment"
   role          = aws_iam_role.lambda_exec_role.arn
-  handler       = "index.handler"
-  runtime       = "nodejs14.x"
-
-  source_code_hash = filebase64sha256("process_payment.zip")
+  handler       = "process_payment.lambda_handler"
+  runtime       = "python3.9"
+  depends_on    = [null_resource.ZIP_LAMBDA]
+#   source_code_hash = filebase64sha256("process_payment.zip")
 }
 
 resource "aws_lambda_function" "prepare_shipment" {
-  filename      = "prepare_shipment.zip"
+  filename      = "${path.module}/lambda_codes/archives/prepare_shipment.zip"
   function_name = "PrepareShipment"
   role          = aws_iam_role.lambda_exec_role.arn
-  handler       = "index.handler"
-  runtime       = "nodejs14.x"
-
-  source_code_hash = filebase64sha256("prepare_shipment.zip")
+  handler       = "prepare_shipment.lambda_handler"
+  runtime       = "python3.9"
+  depends_on    = [null_resource.ZIP_LAMBDA]
+#   source_code_hash = filebase64sha256("prepare_shipment.zip")
 }
 
 resource "aws_lambda_function" "notify_customer" {
-  filename      = "notify_customer.zip"
+  filename      = "${path.module}/lambda_codes/archives/notify_customer.zip"
   function_name = "NotifyCustomer"
   role          = aws_iam_role.lambda_exec_role.arn
-  handler       = "index.handler"
-  runtime       = "nodejs14.x"
-
-  source_code_hash = filebase64sha256("notify_customer.zip")
+  handler       = "notify_customer.lambda_handler"
+  runtime       = "python3.9"
+  depends_on    = [null_resource.ZIP_LAMBDA]
+#   source_code_hash = filebase64sha256("notify_customer.zip")
 }
 
 resource "aws_lambda_function" "handle_error" {
-  filename      = "handle_error.zip"
+  filename      = "${path.module}/lambda_codes/archives/handle_error.zip"
   function_name = "HandleError"
   role          = aws_iam_role.lambda_exec_role.arn
-  handler       = "index.handler"
-  runtime       = "nodejs14.x"
-
-  source_code_hash = filebase64sha256("handle_error.zip")
+  handler       = "handle_error.lambda_handler"
+  runtime       = "python3.9"
+  depends_on    = [null_resource.ZIP_LAMBDA]
+#   source_code_hash = filebase64sha256("handle_error.zip")
 }
-
-
-
 
 
 

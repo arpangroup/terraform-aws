@@ -16,9 +16,9 @@ locals {
 resource "aws_sfn_state_machine" "order_processing" {
   name     = "OrderProcessingWorkflow"
   role_arn = aws_iam_role.step_function_role.arn
-#   definition = local.step_function_definition
+  definition = local.step_function_definition
 
-  definition = <<EOF
+  /*definition = <<EOF
   {
     "Comment": "Order Processing Workflow",
     "StartAt": "ValidateOrder",
@@ -74,7 +74,7 @@ resource "aws_sfn_state_machine" "order_processing" {
       }
     }
   }
-  EOF
+  EOF*/
 }
 
 
